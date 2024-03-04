@@ -2,16 +2,7 @@ import FlightTimeLine from "@/generalComponents/fightTimeLine/FlightTimeLine";
 import { useAppSelector } from "@/hooks/hooks";
 import { oneFlight } from "@/redux/slices/flightsSlice";
 import ThreeFlightDetails from "./ThreeFlightDetails";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import SingleFlightTabs from "./SingleFlightTabs";

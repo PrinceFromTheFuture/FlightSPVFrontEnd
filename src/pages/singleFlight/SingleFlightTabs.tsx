@@ -1,6 +1,5 @@
 import { flightInterface } from "@/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React from "react";
 import Agent from "@/generalComponents/Agent";
 
 interface SingleFlightTabsProps {

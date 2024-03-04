@@ -1,5 +1,4 @@
 import { agentType } from "@/types";
-import React from "react";
 
 interface AgentProps {
   agent: agentType;
