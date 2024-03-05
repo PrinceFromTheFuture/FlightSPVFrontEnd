@@ -4,6 +4,12 @@ export type agentType = {
   name: string;
   role: "SPV" | "Agent" | "Gate Only" | "Desk Only" | "Ramp Agent";
   notes?: string;
+  agentId: string;
+};
+export type flightCrewType = {
+  agents: agentType[];
+  SPV: agentType;
+  rampAgent: agentType;
 };
 type airportType = {
   name: string;
@@ -34,11 +40,7 @@ export interface flightInterface {
       offBlock: Dayjs;
     };
   };
-  crew: {
-    agents: agentType[];
-    SPV: agentType;
-    rampAgent: agentType;
-  };
+  crew: flightCrewType;
 
   gate: string;
   PAGIAAgents: string;

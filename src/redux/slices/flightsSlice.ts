@@ -32,12 +32,17 @@ const initialState: flightInterface[] = [
     },
     crew: {
       agents: [
-        { name: "yosi", role: "Agent", notes: "ffsdfdsffsdd" },
-        { name: "shlomo", role: "Agent" },
-        { name: "ami", role: "Agent" },
+        { name: "yosi", role: "Agent", notes: "ffsdfdsffsdd", agentId: "1" },
+        { name: "shlomo", role: "Agent", agentId: "12" },
+        { name: "ami", role: "Agent", agentId: "14fs3" },
       ],
-      SPV: { name: "Amir", role: "SPV", notes: "אדווה מפוטרת" },
-      rampAgent: { name: "adva", role: "Ramp Agent" },
+      SPV: {
+        name: "Amir",
+        role: "SPV",
+        notes: "אדווה מפוטרת",
+        agentId: "143c3",
+      },
+      rampAgent: { name: "adva", role: "Ramp Agent", agentId: "143c32" },
     },
 
     gate: "432",

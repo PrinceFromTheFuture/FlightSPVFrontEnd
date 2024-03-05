@@ -24,7 +24,7 @@ const Agent = ({ agent, selectedAgent, onClick }: AgentProps) => {
     imgSrc = "/user-blue.svg";
   }
 
-  const isSelected = agent === selectedAgent ? true : false;
+  const isSelected = agent.agentId === selectedAgent?.agentId ? true : false;
 
   return (
     <div
