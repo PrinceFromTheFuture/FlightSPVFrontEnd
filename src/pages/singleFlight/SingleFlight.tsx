@@ -6,7 +6,6 @@ import ThreeFlightDetails from "./ThreeFlightDetails";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import SingleFlightTabs from "./SingleFlightTabs";
-import { Test } from "./Test";
 
 const SingleFlight = () => {
   const flight = useAppSelector((state) => oneFlight(state, "tcp123"));
@@ -72,9 +71,7 @@ const SingleFlight = () => {
         <div className=" border-lightGray border-[3px] w-contentMaxWidth  max-w-screen-md rounded-2xl p-4">
           <SingleFlightTabs flight={flight} />
         </div>
-        <div className="h-[50vh]">
-          <Test />
-        </div>
+        <div className="h-[50vh]"></div>
       </div>
     );
   }

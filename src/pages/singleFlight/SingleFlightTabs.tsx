@@ -1,6 +1,8 @@
 import { flightInterface } from "@/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Agent from "@/generalComponents/Agent";
+import Agent from "@/generalComponents/Agents/Agent";
+
+import EditFlightAgents from "@/generalComponents/Agents/EditFlightAgents";
 
 interface SingleFlightTabsProps {
   flight: flightInterface;
@@ -23,6 +25,7 @@ const SingleFlightTabs = ({ flight }: SingleFlightTabsProps) => {
             return <Agent agent={agent} />;
           })}
         </div>
+        <EditFlightAgents flight={flight} />
       </TabsContent>
       <TabsContent value="FlightReport">Flight Report</TabsContent>
     </Tabs>
