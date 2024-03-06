@@ -8,14 +8,14 @@ import {
 } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { useAppSelector } from "@/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { allAgentsSelector } from "@/redux/slices/agentsSlice";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Plus } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -24,6 +24,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { editAgentsHook } from "@/hooks/editAgentsHook";
+import { updateFlightAgents } from "@/redux/slices/flightsSlice";
 
 interface EditFlightAgentsProps {
   flight: flightInterface;
@@ -31,10 +32,11 @@ interface EditFlightAgentsProps {
 
 const EditFlightAgents = ({ flight }: EditFlightAgentsProps) => {
   const allAgents = useAppSelector(allAgentsSelector);
+  const dispatch = useAppDispatch();
 
   const [isAgentSelectOpen, setIsAgentSelectOpen] = useState(false);
 
-  const { flightAgents, handleNameChange, selectedAgent, setSelectedAgent } =
+  const { flightAgents, selectedAgent, setSelectedAgent, modifyFlightAgents } =
     editAgentsHook(flight.crew);
 
   let imgSrc;
@@ -66,7 +68,10 @@ const EditFlightAgents = ({ flight }: EditFlightAgentsProps) => {
 
               {selectedAgent.role !== "SPV" &&
                 selectedAgent.role !== "Ramp Agent" && (
-                  <div className="bg-blue flex justify-center items-center p-2 rounded-lg">
+                  <div
+                    className="bg-blue flex justify-center items-center p-2 rounded-lg"
+                    onClick={modifyFlightAgents.handleDeleteAgent}
+                  >
                     <img src="/trash-can-xmark.svg" alt="" className="w-4" />
                   </div>
                 )}
@@ -94,7 +99,7 @@ const EditFlightAgents = ({ flight }: EditFlightAgentsProps) => {
                     <Command className="w-contentMaxWidth   bg-white shadow-md  ">
                       <CommandInput placeholder="Search agent..." />
                       <CommandEmpty>No agent found.</CommandEmpty>
-                      <CommandGroup className="max-h-[150px] overflow-scroll ">
+                      <CommandGroup className="max-h-[150px] overflow-y-scroll ">
                         {allAgents.map((agent) => (
                           <CommandItem
                             className={cn(
@@ -105,7 +110,9 @@ const EditFlightAgents = ({ flight }: EditFlightAgentsProps) => {
                             key={agent.agentId}
                             value={agent.name}
                             onSelect={(newAgentName) => {
-                              handleNameChange(newAgentName);
+                              modifyFlightAgents.handleAgentNameChange(
+                                newAgentName
+                              );
                               setIsAgentSelectOpen(false);
                             }}
                           >
@@ -126,11 +133,23 @@ const EditFlightAgents = ({ flight }: EditFlightAgentsProps) => {
                 </PopoverContent>
               </Popover>
             </div>
+            <div className="mt-4">
+              <div className="  text-md font-semibold ml-2 mb-2">
+                Agent Notes
+              </div>
+              <textarea
+                className="w-full p-2 border-2 border-lightGray outline-none rounded-lg h-[60px] "
+                value={selectedAgent.notes || ""}
+                onChange={(event) =>
+                  modifyFlightAgents.handleAgentNotesChange(event.target.value)
+                }
+              ></textarea>
+            </div>
           </div>
         )}
         <div
           className={cn(
-            " flex flex-col gap-3 w-full max-h-[220px] my-4 overflow-auto "
+            " flex flex-col gap-3 w-full max-h-[150px] my-4 overflow-auto "
           )}
         >
           <Agent
@@ -154,12 +173,29 @@ const EditFlightAgents = ({ flight }: EditFlightAgentsProps) => {
               />
             );
           })}
+          <div
+            className="bg-blue w-full py-2.5 rounded-xl flex items-center justify-center font-semibold text-sm text-white gap-2"
+            onClick={modifyFlightAgents.handleAddAgent}
+          >
+            new Agent
+            <Plus />
+          </div>
         </div>
         <DrawerClose
-          disabled={!selectedAgent}
-          className={cn("bg-blue w-full h-8", !selectedAgent && "bg-blue/80")}
+          onClick={() =>
+            dispatch(
+              updateFlightAgents({
+                flightId: flight.flightId,
+                agents: flightAgents,
+              })
+            )
+          }
+          className={cn(
+            "bg-blue w-full py-3 text-white font-semibold font-sm rounded-xl",
+            !selectedAgent && "bg-blue/80"
+          )}
         >
-          ffd
+          Save Changes
         </DrawerClose>
       </DrawerContent>
     </Drawer>

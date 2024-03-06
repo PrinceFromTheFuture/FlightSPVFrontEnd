@@ -44,7 +44,7 @@ const Agent = ({ agent, selectedAgent, onClick }: AgentProps) => {
           <div className="   text-lg font-bold text-blue">{agent.name}</div>
         </div>
       </div>
-      {agent.notes != undefined && (
+      {agent.notes != undefined && agent.notes != "" && (
         <Dialog>
           <DialogTrigger>
             <div className=" h-full w-5 bg-blue rounded-lg flex justify-center items-center text-white text-3xl shadow-md">

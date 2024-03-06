@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
-import { flightInterface } from "@/types";
+import { flightCrewType, flightInterface } from "@/types";
 
 // Define the initial state using that type
 const initialState: flightInterface[] = [
@@ -61,20 +61,21 @@ export const flightsSlice = createSlice({
   initialState,
   reducers: {
     // Use the PayloadAction type to declare the contents of `action.payload`
-    setDepatrure: (
+    updateFlightAgents: (
       state,
-      action: PayloadAction<{ flightId: string; date: Dayjs }>
+      action: PayloadAction<{ flightId: string; agents: flightCrewType }>
     ) => {
       const requestedFlight = state.find((flight) => {
-        flight.flightId === action.payload.flightId;
+        return flight.flightId === action.payload.flightId;
       });
-      if (requestedFlight)
-        requestedFlight.keyMoments.planned.departure = action.payload.date;
+      if (requestedFlight) {
+        requestedFlight.crew = action.payload.agents;
+      }
     },
   },
 });
 
-export const { setDepatrure } = flightsSlice.actions;
+export const { updateFlightAgents } = flightsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const allFlights = (state: RootState) => state.flights;

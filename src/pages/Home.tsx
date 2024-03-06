@@ -1,9 +1,5 @@
-import {
-  setDepatrure,
-  allFlights,
-  oneFlight,
-} from "@/redux/slices/flightsSlice";
-import { useAppSelector, useAppDispatch } from "../hooks/hooks";
+import { allFlights, oneFlight } from "@/redux/slices/flightsSlice";
+import { useAppSelector } from "../hooks/hooks";
 import { Outlet } from "react-router-dom";
 import dayjs from "dayjs";
 import { useEffect } from "react";
@@ -18,8 +14,6 @@ function Home() {
   const iz101keyMoments = flights.find(
     (flight) => flight.flightId === "tcp123"
   )!.keyMoments;
-
-  const dispatch = useAppDispatch();
 
   const exampleNow = dayjs("2024-3-1T13:27");
 
@@ -50,15 +44,7 @@ function Home() {
       <Button variant={"destructive"}>fdfdfsdf</Button>
       <div>
         <div className="text-lg">Upcoming lfights </div>
-        <button
-          onClick={() =>
-            dispatch(
-              setDepatrure({ flightId: "tcp123", date: dayjs("2021-1-24") })
-            )
-          }
-        >
-          add
-        </button>
+
         <div className=" bg-lightGray" style={{ width: `20rem` }}>
           <div
             className="bg-gray"
