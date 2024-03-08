@@ -2,7 +2,7 @@ import { Dayjs } from "dayjs";
 
 export type agentType = {
   name: string;
-  role: "SPV" | "Agent" | "Gate Only" | "Desk Only" | "Ramp Agent";
+  role: "SPV" | "Agent" | "Ramp Agent";
   notes?: string;
   agentId: string;
 };
@@ -15,6 +15,13 @@ type airportType = {
   name: string;
   shortName: string;
 };
+export type flightReportKeyMoments =
+  | "countersOpening"
+  | "countersClosing"
+  | "bordingEnd"
+  | "bordingStart"
+  | "openningBoardingPagia"
+  | "offBlock";
 
 export interface flightInterface {
   personalRole: "SPV" | "Agent";
@@ -38,12 +45,13 @@ export interface flightInterface {
       bordingEnd: Dayjs;
       bordingStart: Dayjs;
       offBlock: Dayjs;
+      openningBoardingPagia: Dayjs;
     };
   };
   crew: flightCrewType;
 
   gate: string;
-  PAGIAAgents: string;
+  PAGIAAgent: agentType;
   totalPassangers: number;
   totalSuitcases: number;
   totalStrollers: number;

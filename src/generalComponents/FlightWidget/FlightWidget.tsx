@@ -14,7 +14,7 @@ const FlightWidget = ({ flight }: FlightWidgetProps) => {
     now.isBefore(flight.keyMoments.planned.departure);
 
   return (
-    <Link className=" " to={"/singleFlight/78d"}>
+    <Link className=" " to={`/singleFlight/${flight.flightId}`}>
       <div
         className="w-full rounded-t-xl  p-4 flex justify-between 
         bg-lightGray relative"

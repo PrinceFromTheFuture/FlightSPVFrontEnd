@@ -2,7 +2,6 @@ import { allFlights, oneFlight } from "@/redux/slices/flightsSlice";
 import { useAppSelector } from "../hooks/hooks";
 import { Outlet } from "react-router-dom";
 import dayjs from "dayjs";
-import { useEffect } from "react";
 import DatePicker from "../generalComponents/DatePicker";
 
 import { Button } from "../components/ui/button";
@@ -34,10 +33,6 @@ function Home() {
     shiftFiledPersentage <= 0 || shiftFiledPersentage > 1
       ? 0
       : shiftFiledPersentage;
-
-  useEffect(() => {
-    console.log(shiftFiledPersentage);
-  }, []);
 
   return (
     <div className="   w-full  ">

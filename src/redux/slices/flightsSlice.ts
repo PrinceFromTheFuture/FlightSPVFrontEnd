@@ -1,8 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
-import { flightCrewType, flightInterface } from "@/types";
+import {
+  flightCrewType,
+  flightInterface,
+  flightReportKeyMoments,
+} from "@/types";
 
 // Define the initial state using that type
 const initialState: flightInterface[] = [
@@ -28,6 +32,7 @@ const initialState: flightInterface[] = [
         bordingEnd: dayjs("2024-3-1T12:00"),
         bordingStart: dayjs("2024-3-1T12:00"),
         offBlock: dayjs("2024-3-1T12:00"),
+        openningBoardingPagia: dayjs("2024-3-1T12:00"),
       },
     },
     crew: {
@@ -47,9 +52,9 @@ const initialState: flightInterface[] = [
 
     gate: "432",
 
-    PAGIAAgents: "423",
-    totalPassangers: 342,
-    totalSuitcases: 342,
+    PAGIAAgent: { name: "fdsdva", role: "Agent", agentId: "143c3fsda2" },
+    totalPassangers: 3242,
+    totalSuitcases: 142,
     totalStrollers: 342,
     counters: "34-23",
   },
@@ -72,10 +77,60 @@ export const flightsSlice = createSlice({
         requestedFlight.crew = action.payload.agents;
       }
     },
+    updateFlightNumbers: (
+      state,
+      action: PayloadAction<{
+        flightId: string;
+        type: "totalPassangers" | "totalStrollers" | "totalSuitcases";
+        value: number;
+      }>
+    ) => {
+      const requestedFlight = state.find((flight) => {
+        return flight.flightId === action.payload.flightId;
+      });
+      if (requestedFlight) {
+        requestedFlight[action.payload.type] = action.payload.value;
+      }
+    },
+    updateFlightKeyMomentsActual: (
+      state,
+      action: PayloadAction<{
+        flightId: string;
+        type: flightReportKeyMoments;
+        value: Dayjs;
+      }>
+    ) => {
+      const requestedFlight = state.find((flight) => {
+        return flight.flightId === action.payload.flightId;
+      });
+      if (requestedFlight) {
+        requestedFlight.keyMoments.actual[action.payload.type] =
+          action.payload.value;
+      }
+    },
+    updateFlightPagiaAgent: (
+      state,
+      action: PayloadAction<{
+        flightId: string;
+        value: string;
+      }>
+    ) => {
+      const requestedFlight = state.find((flight) => {
+        return flight.flightId === action.payload.flightId;
+      });
+      if (requestedFlight) {
+        requestedFlight.PAGIAAgent.name = action.payload.value;
+      }
+    },
   },
 });
 
-export const { updateFlightAgents } = flightsSlice.actions;
+export const {
+  updateFlightAgents,
+  updateFlightNumbers,
+  updateFlightKeyMomentsActual,
+  updateFlightPagiaAgent,
+} = flightsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const allFlights = (state: RootState) => state.flights;

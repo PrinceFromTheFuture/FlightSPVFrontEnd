@@ -3,12 +3,18 @@ import { useAppSelector } from "@/hooks/hooks";
 import { oneFlight } from "@/redux/slices/flightsSlice";
 import ThreeFlightDetails from "./ThreeFlightDetails";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import SingleFlightTabs from "./SingleFlightTabs";
 
 const SingleFlight = () => {
-  const flight = useAppSelector((state) => oneFlight(state, "tcp123"));
+  const { flightID } = useParams();
+  console.log(flightID);
+  if (flightID == undefined || "") {
+    return <div>A problem occured</div>;
+  }
+
+  const flight = useAppSelector((state) => oneFlight(state, flightID));
 
   const now = dayjs();
   const isFlightActive =
@@ -69,9 +75,8 @@ const SingleFlight = () => {
         </div>
 
         <div className=" border-lightGray border-[3px] w-contentMaxWidth  max-w-screen-md rounded-2xl p-4">
-          <SingleFlightTabs flight={flight} />
+          <SingleFlightTabs />
         </div>
-        <div className="h-[50vh]"></div>
       </div>
     );
   }
