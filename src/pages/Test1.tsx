@@ -1,5 +1,5 @@
 // MultiStageForm.js
-import React, { useState } from "react";
+import { useState } from "react";
 import "./MultiStageForm.css"; // Import your CSS file for styling and transitions
 import { cn } from "@/lib/utils";
 
@@ -57,36 +57,6 @@ const Test1 = () => {
       <div className="p-4 bg-blue text-white" onClick={prevStage}>
         Back
       </div>
-    </div>
-  );
-};
-
-const Stage1 = () => {
-  return (
-    <div>
-      {/* Stage 1 content */}
-      <h2>Stage 1</h2>
-      {/* Add your form fields and logic for this stage */}
-    </div>
-  );
-};
-
-const Stage2 = () => {
-  return (
-    <div>
-      {/* Stage 2 content */}
-      <h2>Stage 2</h2>
-      {/* Add your form fields and logic for this stage */}
-    </div>
-  );
-};
-
-const Stage3 = () => {
-  return (
-    <div>
-      {/* Stage 3 content */}
-      <h2>Stage 3</h2>
-      {/* Add your form fields and logic for this stage */}
     </div>
   );
 };
