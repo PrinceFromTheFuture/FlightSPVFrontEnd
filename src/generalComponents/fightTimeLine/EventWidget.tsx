@@ -34,7 +34,7 @@ const EventWidget = ({
           {isSameLine && ","}
         </div>
         <div className=" text-gray text-sm font-medium  ">
-          {date.format("DD MMM HH:MM")}
+          {date.format("DD MMM HH:mm")}
         </div>
       </div>
     </div>

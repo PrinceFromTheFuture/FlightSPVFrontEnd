@@ -6,6 +6,7 @@ import ThreeFlightDetails from "./ThreeFlightDetails";
 import { Link, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import SingleFlightTabs from "./SingleFlightTabs";
+import EditFlight from "@/generalComponents/editFlight/EditFlight";
 
 const SingleFlight = () => {
   const { flightID } = useParams();
@@ -30,6 +31,7 @@ const SingleFlight = () => {
           <Link to={"/"} className=" bg-lightGray p-2.5 rounded-xl">
             <img src="/arrow.svg" alt="432  " className="rotate-180 w-4 " />
           </Link>
+
           {isFlightActive && (
             <span className="relative flex h-4 w-7 mr-3">
               <span className="relative rounded-full h-4 w-7 text-sm font-semibold   text-white bg-blue flex justify-center items-center">
@@ -76,6 +78,9 @@ const SingleFlight = () => {
 
         <div className=" border-lightGray border-[3px] w-contentMaxWidth  max-w-screen-md rounded-2xl p-4">
           <SingleFlightTabs />
+        </div>
+        <div>
+          <EditFlight />
         </div>
       </div>
     );

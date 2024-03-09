@@ -13,18 +13,18 @@ const initialState: flightInterface[] = [
   {
     personalRole: "SPV",
 
-    flightNumber: "IZ 101",
+    flightNumber: "IZ 773",
     flightId: "tcp123",
     origin: { name: "Tel Aviv", shortName: "TLV" },
-    destenation: { name: "Larnaca", shortName: "LCA" },
+    destenation: { name: "Grenoble", shortName: "GNB" },
     flightTime: "2 hours",
     keyMoments: {
       planned: {
-        shiftStarts: dayjs("2024-3-4T17:00"),
-        countersOpening: dayjs("2024-3-4T17:30"),
-        countersClosing: dayjs("2024-3-4T19:30"),
-        bording: dayjs("2024-3-4T19:45"),
-        departure: dayjs("2024-3-4T20:30"),
+        shiftStarts: dayjs("2024-3-10T03:30"),
+        countersOpening: dayjs("2024-3-10T04:00"),
+        countersClosing: dayjs("2024-3-10T06:00"),
+        bording: dayjs("2024-3-10T06:15"),
+        departure: dayjs("2024-3-10T07:00"),
       },
       actual: {
         countersOpening: dayjs("2024-3-1T12:00"),
@@ -37,12 +37,17 @@ const initialState: flightInterface[] = [
     },
     crew: {
       agents: [
-        { name: "yosi", role: "Agent", notes: "ffsdfdsffsdd", agentId: "1" },
-        { name: "shlomo", role: "Agent", agentId: "12" },
-        { name: "ami", role: "Agent", agentId: "14fs3" },
+        {
+          name: "mikel marshel",
+          role: "Agent",
+          notes: "ffsdfdsffsdd",
+          agentId: "1",
+        },
+        { name: "Tamar Tal", role: "Agent", agentId: "12" },
+        { name: "Amir Waisblay", role: "Agent", agentId: "14fs3" },
       ],
       SPV: {
-        name: "Amir",
+        name: "Angelica sabash",
         role: "SPV",
         notes: "אדווה מפוטרת",
         agentId: "143c3",
@@ -56,7 +61,55 @@ const initialState: flightInterface[] = [
     totalPassangers: 3242,
     totalSuitcases: 142,
     totalStrollers: 342,
-    counters: "34-23",
+    counters: "46-51",
+  },
+  {
+    personalRole: "Agent",
+
+    flightNumber: "IZ 415",
+    flightId: "tcp1231",
+    origin: { name: "Tel Aviv", shortName: "TLV" },
+    destenation: { name: "Batumi", shortName: "BUS" },
+    flightTime: "2 hours",
+    keyMoments: {
+      planned: {
+        shiftStarts: dayjs("2024-3-10T01:45"),
+        countersOpening: dayjs("2024-3-10T02:15"),
+        countersClosing: dayjs("2024-3-10T04:15"),
+        bording: dayjs("2024-3-10T05:00"),
+        departure: dayjs("2024-3-10T05:45"),
+      },
+      actual: {
+        countersOpening: dayjs("2024-3-10T01:00"),
+        countersClosing: dayjs("2024-3-10T12:00"),
+        bordingEnd: dayjs("2024-3-10T12:00"),
+        bordingStart: dayjs("2024-3-10T12:00"),
+        offBlock: dayjs("2024-3-10T12:00"),
+        openningBoardingPagia: dayjs("2024-3-10T12:00"),
+      },
+    },
+    crew: {
+      agents: [
+        { name: "Amir", role: "Agent", notes: "ffsdfdsffsdd", agentId: "135" },
+        { name: "Dalia Sidi", role: "Agent", agentId: "122356" },
+        { name: "Hezi Akiva", role: "Agent", agentId: "14fs3f3" },
+      ],
+      SPV: {
+        name: "Yosef Mubarak",
+        role: "SPV",
+        notes: "אדווה מפוטרת",
+        agentId: "143c233",
+      },
+      rampAgent: { name: "adva", role: "Ramp Agent", agentId: "143f3c32" },
+    },
+
+    gate: "432",
+
+    PAGIAAgent: { name: "fdsdva", role: "Agent", agentId: "143c3fsda2" },
+    totalPassangers: 3242,
+    totalSuitcases: 142,
+    totalStrollers: 342,
+    counters: "34-38",
   },
 ];
 

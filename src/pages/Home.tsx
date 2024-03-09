@@ -6,9 +6,11 @@ import DatePicker from "../generalComponents/DatePicker";
 
 import { Button } from "../components/ui/button";
 import FlightWidget from "@/generalComponents/FlightWidget/FlightWidget.tsx";
+import Test1 from "./Test1";
 function Home() {
   const flights = useAppSelector(allFlights);
   const flightSingke = useAppSelector((state) => oneFlight(state, "tcp123"));
+  const flightSingke1 = useAppSelector((state) => oneFlight(state, "tcp1231"));
 
   const iz101keyMoments = flights.find(
     (flight) => flight.flightId === "tcp123"
@@ -57,8 +59,10 @@ function Home() {
       <DatePicker></DatePicker>
       <div className="mt-5">
         <FlightWidget flight={flightSingke!}></FlightWidget>
+        <FlightWidget flight={flightSingke1!}></FlightWidget>
       </div>
       <img src=" user.svg" alt="434" className="w-4" />
+      <Test1 />
     </div>
   );
 }
