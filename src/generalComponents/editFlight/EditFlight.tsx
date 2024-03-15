@@ -10,8 +10,9 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useAppSelector } from "@/hooks/hooks";
-import { oneFlight } from "@/redux/slices/flightsSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { oneFlight, updateFlightMetaData } from "@/redux/slices/flightsSlice";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -32,20 +33,36 @@ const EditFlight = () => {
       origin: flight.origin.shortName,
       destenation: flight.destenation.shortName,
     });
+    const dispatch = useAppDispatch();
+    const handleSaveFlight = () => {
+      dispatch(
+        updateFlightMetaData({
+          flightId: flightID,
+          ...flightMetaData,
+        })
+      );
+    };
 
     return (
       <Drawer>
-        <DrawerTrigger>Hey</DrawerTrigger>
+        <DrawerTrigger>
+          {" "}
+          <div className="flex justify-start items-center gap-2.5 font-medium">
+            <img src="/pen-blue.svg" alt="" className="w-3" />
+            <div> Edit</div>
+          </div>
+        </DrawerTrigger>
         <DrawerContent>
-          <div className="flex flex-col justify-center items-center w-full gap-4">
+          <div className="flex flex-col justify-center items-center w-full gap-4 mb-3">
             <Dialog>
-              <DialogTrigger className="w-full">
-                <div className="  text-md font-semibold ml-2 mb-2 text-left">
-                  Flight Number
-                </div>
-                <div className="bg-lightGray rounded-lg w-full flex justify-center gap-2.5 items-center p-2.5  ">
-                  <img src="/plane-departure.svg" className="w-4" />
-                  <div className="   text-md font-bold text-blue">
+              <DialogTrigger className=" bg-lightGray rounded-lg w-full flex justify-start gap-3 items-center p-2.5">
+                <img src="/plane-departure.svg" className="w-4" />
+
+                <div className="">
+                  <div className="  text-sm font-semibold text-gray  mb-1 text-left">
+                    Flight Number
+                  </div>
+                  <div className="   text-md font-bold text-blue text-left">
                     {flightMetaData.flightNumber}
                   </div>
                 </div>
@@ -71,43 +88,12 @@ const EditFlight = () => {
               </DialogContent>
             </Dialog>
             <Dialog>
-              <DialogTrigger className="w-full">
-                <div className="  text-md font-semibold ml-2 mb-2 text-left">
-                  Flight Gate
-                </div>
-                <div className="bg-lightGray rounded-lg w-full flex justify-center gap-2.5 items-center p-2.5  ">
-                  <img src="/door-open-blue.svg" className="w-4" />
-                  <div className="   text-md font-bold text-blue">
-                    {flightMetaData.gate}
-                  </div>
-                </div>
-              </DialogTrigger>
-              <DialogContent className="">
-                <div className=" text-blue font-bold text-2xl  "></div>
-                <input
-                  type="text"
-                  value={flightMetaData.gate}
-                  onChange={(event) =>
-                    setFlightMetaData({
-                      ...flightMetaData,
-                      gate: event.target.value,
-                    })
-                  }
-                  className="text-lg font-semibold  outline-none border-2 border-blue text-center text-blue rounded-lg p-2"
-                />
-                <DialogClose className=" items-end ">
-                  <div className="py-2 bg-blue rounded-lg font-semibold px-4 text-white">
-                    Save
-                  </div>
-                </DialogClose>
-              </DialogContent>
-            </Dialog>
-            <Dialog>
-              <DialogTrigger className=" bg-lightGray rounded-lg w-full flex justify-start gap-2.5 items-center p-2.5">
+              <DialogTrigger className=" bg-lightGray rounded-lg w-full flex justify-start gap-3 items-center p-2.5">
                 <div className="flex flex-col">
                   <img src="/plane-departure-gray.svg" className="w-4" />
                   <div className="w-2 border-l-2 border-dashed border-gray h-3 ml-2 mt-1"></div>
                 </div>
+
                 <div className="">
                   <div className="  text-sm font-semibold text-gray  mb-1 text-left">
                     From
@@ -138,7 +124,7 @@ const EditFlight = () => {
               </DialogContent>
             </Dialog>
             <Dialog>
-              <DialogTrigger className=" bg-lightGray rounded-lg w-full flex justify-start gap-2.5 items-center p-2.5">
+              <DialogTrigger className=" bg-lightGray rounded-lg w-full flex justify-start gap-3 items-center p-2.5">
                 <div>
                   <div className="w-2 border-l-2 border-dashed border-gray h-3 ml-2 mb-1"></div>
                   <img src="/plane-departure-gray.svg" className="w-4" />
@@ -172,9 +158,104 @@ const EditFlight = () => {
                 </DialogClose>
               </DialogContent>
             </Dialog>
+            <Dialog>
+              <DialogTrigger className=" bg-lightGray rounded-lg w-full flex justify-start gap-3 items-center p-2.5">
+                <img src="/door-open-gray.svg" alt="" className="w-4" />
+                <div className="">
+                  <div className="  text-sm font-semibold text-gray  mb-1 text-left">
+                    Gate
+                  </div>
+                  <div className="   text-md font-bold text-blue text-left">
+                    {flightMetaData.gate}
+                  </div>
+                </div>
+              </DialogTrigger>
+              <DialogContent className="">
+                <div className=" text-blue font-bold text-2xl  "></div>
+                <input
+                  type="text"
+                  value={flightMetaData.gate}
+                  onChange={(event) =>
+                    setFlightMetaData({
+                      ...flightMetaData,
+                      gate: event.target.value,
+                    })
+                  }
+                  className="text-lg font-semibold  outline-none border-2 border-blue text-center text-blue rounded-lg p-2"
+                />
+                <DialogClose className=" items-end ">
+                  <div className="py-2 bg-blue rounded-lg font-semibold px-4 text-white">
+                    Save
+                  </div>
+                </DialogClose>
+              </DialogContent>
+            </Dialog>
+            <Dialog>
+              <DialogTrigger className=" bg-lightGray rounded-lg w-full flex justify-start gap-3 items-center p-2.5">
+                <img src="/store-gray.svg" alt="" className="w-4" />
+                <div className="">
+                  <div className="  text-sm font-semibold text-gray  mb-1 text-left">
+                    Counters
+                  </div>
+                  <div className="   text-md font-bold text-blue text-left">
+                    {flightMetaData.counters}
+                  </div>
+                </div>
+              </DialogTrigger>
+              <DialogContent className="">
+                <div className=" text-blue font-bold text-2xl  "></div>
+                <input
+                  type="text"
+                  value={flightMetaData.counters}
+                  onChange={(event) =>
+                    setFlightMetaData({
+                      ...flightMetaData,
+                      counters: event.target.value,
+                    })
+                  }
+                  className="text-lg font-semibold  outline-none border-2 border-blue text-center text-blue rounded-lg p-2"
+                />
+                <DialogClose className=" items-end ">
+                  <div className="py-2 bg-blue rounded-lg font-semibold px-4 text-white">
+                    Save
+                  </div>
+                </DialogClose>
+              </DialogContent>
+            </Dialog>
+            <div className="w-full">
+              <input
+                type="datetime-local"
+                value={flightMetaData.departure.format("YYYY-MM-DDTHH:MM")}
+                onChange={(event) =>
+                  setFlightMetaData({
+                    ...flightMetaData,
+                    departure: dayjs(event.target.value),
+                  })
+                }
+                id="departure"
+                className=" absolute invisible"
+              />
+              <label
+                htmlFor="departure"
+                className=" bg-lightGray rounded-lg w-full flex justify-start gap-3 items-center p-2.5"
+              >
+                <img src="/calendar-days-gray.svg" alt="" className="w-4" />
+                <div className="">
+                  <div className="  text-sm font-semibold text-gray  mb-1 text-left">
+                    Departure Date
+                  </div>
+                  <div className="   text-md font-bold text-blue text-left">
+                    {flightMetaData.departure.format("DD MMM HH:mm")}
+                  </div>
+                </div>
+              </label>
+            </div>
           </div>
 
-          <DrawerClose className="bg-blue w-full py-3 text-white font-semibold font-sm rounded-xl">
+          <DrawerClose
+            className="bg-blue w-full py-3 text-white font-semibold font-sm rounded-xl"
+            onClick={handleSaveFlight}
+          >
             Save Changes
           </DrawerClose>
         </DrawerContent>

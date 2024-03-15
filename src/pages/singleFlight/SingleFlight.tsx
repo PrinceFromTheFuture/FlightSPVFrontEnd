@@ -7,6 +7,14 @@ import { Link, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import SingleFlightTabs from "./SingleFlightTabs";
 import EditFlight from "@/generalComponents/editFlight/EditFlight";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const SingleFlight = () => {
   const { flightID } = useParams();
@@ -28,12 +36,15 @@ const SingleFlight = () => {
     return (
       <div className=" flex justify-center items-center  flex-col relative ">
         <div className=" flex justify-between items-center w-contentMaxWidth">
-          <Link to={"/"} className=" bg-lightGray p-2.5 rounded-xl">
+          <Link
+            to={"/"}
+            className=" bg-lightGray  rounded-xl w-7 h-7 flex justify-center items-center"
+          >
             <img src="/arrow.svg" alt="432  " className="rotate-180 w-4 " />
           </Link>
 
           {isFlightActive && (
-            <span className="relative flex h-4 w-7 mr-3">
+            <span className="relative flex h-4 w-7  ">
               <span className="relative rounded-full h-4 w-7 text-sm font-semibold   text-white bg-blue flex justify-center items-center">
                 live
               </span>
@@ -41,6 +52,33 @@ const SingleFlight = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue opacity-75"></span>
             </span>
           )}
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              {" "}
+              <div className=" bg-lightGray  rounded-xl w-7 h-7 flex justify-center items-center">
+                <img
+                  src="/ellipsis-vertical.svg"
+                  alt="432  "
+                  className=" w-[7px]"
+                />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              sideOffset={20}
+              className="shadow-xl"
+            >
+              <div className="w-[150px] p-2 flex flex-col gap-3">
+                <div>
+                  <EditFlight />
+                </div>
+                <div className="flex justify-start items-center gap-2.5 font-medium">
+                  <img src="/trash-can-xmark-blue.svg" alt="" className="w-3" />
+                  <div> Delete</div>
+                </div>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <div className=" font-bold text-3xl my-5  w-10/12 flex flex-col justify-center items-center   ">
           <div className=" text-gray font-semibold text-lg">Flight no.</div>
@@ -78,9 +116,6 @@ const SingleFlight = () => {
 
         <div className=" border-lightGray border-[3px] w-contentMaxWidth  max-w-screen-md rounded-2xl p-4">
           <SingleFlightTabs />
-        </div>
-        <div>
-          <EditFlight />
         </div>
       </div>
     );

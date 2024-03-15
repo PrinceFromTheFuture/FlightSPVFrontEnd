@@ -175,6 +175,40 @@ export const flightsSlice = createSlice({
         requestedFlight.PAGIAAgent.name = action.payload.value;
       }
     },
+    updateFlightMetaData: (
+      state,
+      action: PayloadAction<{
+        flightId: string;
+        flightNumber: string;
+        gate: string;
+        counters: string;
+        departure: Dayjs;
+        origin: string;
+        destenation: string;
+      }>
+    ) => {
+      const requestedFlight = state.find((flight) => {
+        return flight.flightId === action.payload.flightId;
+      });
+      if (requestedFlight) {
+        requestedFlight.flightNumber = action.payload.flightNumber;
+        requestedFlight.gate = action.payload.gate;
+        requestedFlight.counters = action.payload.counters;
+
+        requestedFlight.keyMoments.planned.shiftStarts =
+          action.payload.departure.subtract(3.5, "hours");
+        requestedFlight.keyMoments.planned.countersOpening =
+          action.payload.departure.subtract(3, "hours");
+        requestedFlight.keyMoments.planned.countersClosing =
+          action.payload.departure.subtract(1, "hours");
+        requestedFlight.keyMoments.planned.bording =
+          action.payload.departure.subtract(0.45, "hours");
+        requestedFlight.keyMoments.planned.departure = action.payload.departure;
+
+        requestedFlight.origin.shortName = action.payload.origin;
+        requestedFlight.destenation.shortName = action.payload.destenation;
+      }
+    },
   },
 });
 
@@ -183,6 +217,7 @@ export const {
   updateFlightNumbers,
   updateFlightKeyMomentsActual,
   updateFlightPagiaAgent,
+  updateFlightMetaData,
 } = flightsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
