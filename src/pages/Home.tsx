@@ -1,4 +1,4 @@
-import { allFlights, oneFlight } from "@/redux/slices/flightsSlice";
+import { allFlights } from "@/redux/slices/flightsSlice";
 import { useAppSelector } from "../hooks/hooks";
 import dayjs from "dayjs";
 import DatePicker from "../generalComponents/DatePicker";
@@ -7,8 +7,6 @@ import FlightWidget from "@/generalComponents/FlightWidget/FlightWidget.tsx";
 import { useState } from "react";
 function Home() {
   const flights = useAppSelector(allFlights);
-  const flightSingke = useAppSelector((state) => oneFlight(state, "tcp123"));
-  const flightSingke1 = useAppSelector((state) => oneFlight(state, "tcp1231"));
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
   const flightsInSelectedDate = flights.map((flight) => {
