@@ -8,9 +8,13 @@ import { cn } from "../lib/utils";
 import { Card, CardContent } from "../components/ui/card";
 import dayjs, { Dayjs } from "dayjs";
 
-const DatePicker = () => {
+interface DatePickerProps {
+  selectedDate: Dayjs;
+  setSelectedDate: (day: Dayjs) => void;
+}
+
+const DatePicker = ({ selectedDate, setSelectedDate }: DatePickerProps) => {
   const [date, setDate] = useState<Dayjs>(dayjs());
-  const [selectedDate, setSelectedDate] = useState(date.get("date"));
 
   const daysInWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -22,21 +26,43 @@ const DatePicker = () => {
     setDate(date);
   }
 
-  console.log(date);
+  const handleChangeDayInAMonth = (day: number) => {
+    setSelectedDate(date.set("date", day));
+  };
+
+  const monthsInAYear = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   return (
     <div className=" flex  flex-col justify-center items-center ">
       <div>
-        <label htmlFor="username">
-          <div className="bg-gray">
-            {date.get("year")}M{date.get("month")}
+        <label
+          htmlFor="dateMonth"
+          className="flex justify-between items-center gap-3 mb-3"
+        >
+          <img src="/triangle-blue.svg" alt="" className="w-3 rotate-90" />
+          <div className=" font-bold text-blue">
+            {`${monthsInAYear[date.get("M")]}, ${date.get("year")}`}
           </div>
+          <img src="/triangle-blue.svg" alt="" className="w-3 -rotate-90" />
         </label>
 
         <input
           type="month"
-          id="username"
-          name="username"
+          id="dateMonth"
+          name="dateMonth"
           className="  invisible absolute"
           onChange={(e) => handleChange(e)}
         />
@@ -50,9 +76,11 @@ const DatePicker = () => {
               <Card
                 className={cn(
                   "bg-lightGray flex justify-center items-center flex-col rounded-2xl transition-all ",
-                  index + 1 === selectedDate ? "bg-blue text-white" : ""
+                  index + 1 === selectedDate.get("date")
+                    ? "bg-blue text-white"
+                    : ""
                 )}
-                onClick={() => setSelectedDate(index + 1)}
+                onClick={() => handleChangeDayInAMonth(index + 1)}
               >
                 <CardContent className="flex justify-center items-center flex-col py-3">
                   <div className=" font-normal text-sm">

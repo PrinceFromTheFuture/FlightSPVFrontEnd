@@ -3,7 +3,7 @@ import { useAppSelector } from "@/hooks/hooks";
 import { oneFlight } from "@/redux/slices/flightsSlice";
 import ThreeFlightDetails from "./ThreeFlightDetails";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import SingleFlightTabs from "./SingleFlightTabs";
 import EditFlight from "@/generalComponents/editFlight/EditFlight";
@@ -12,10 +12,11 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useEffect } from "react";
 
 const SingleFlight = () => {
+  const navigate = useNavigate();
   const { flightID } = useParams();
-  console.log(flightID);
   if (flightID == undefined || "") {
     return <div>A problem occured</div>;
   }
@@ -28,7 +29,10 @@ const SingleFlight = () => {
     now.isBefore(flight?.keyMoments.planned.departure);
 
   if (flight === undefined) {
-    return <div>no flight</div>;
+    useEffect(() => {
+      navigate("/");
+    }, []);
+    return null;
   } else {
     return (
       <div className=" flex justify-center items-center  flex-col relative ">
@@ -61,15 +65,16 @@ const SingleFlight = () => {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              align="end"
+              side="left"
+              align="start"
               sideOffset={20}
               className="shadow-xl"
             >
-              <div className="w-[150px] p-2 flex flex-col gap-3">
-                <div>
+              <div className="w-[150px]  flex flex-col ">
+                <div className="w-full  p-3">
                   <EditFlight />
                 </div>
-                <div className="flex justify-start items-center gap-2.5 font-medium">
+                <div className="flex justify-start items-center gap-2.5 font-medium p-3 pt-[0px]">
                   <img src="/trash-can-xmark-blue.svg" alt="" className="w-3" />
                   <div> Delete</div>
                 </div>

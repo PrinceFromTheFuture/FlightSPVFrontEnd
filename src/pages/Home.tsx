@@ -1,68 +1,43 @@
 import { allFlights, oneFlight } from "@/redux/slices/flightsSlice";
 import { useAppSelector } from "../hooks/hooks";
-import { Outlet } from "react-router-dom";
 import dayjs from "dayjs";
 import DatePicker from "../generalComponents/DatePicker";
 
-import { Button } from "../components/ui/button";
 import FlightWidget from "@/generalComponents/FlightWidget/FlightWidget.tsx";
-import Test1 from "./Test1";
+import { useState } from "react";
 function Home() {
   const flights = useAppSelector(allFlights);
   const flightSingke = useAppSelector((state) => oneFlight(state, "tcp123"));
   const flightSingke1 = useAppSelector((state) => oneFlight(state, "tcp1231"));
+  const [selectedDate, setSelectedDate] = useState(dayjs());
 
-  const iz101keyMoments = flights.find(
-    (flight) => flight.flightId === "tcp123"
-  )!.keyMoments;
-
-  const exampleNow = dayjs("2024-3-1T13:27");
-
-  const shiftLength = iz101keyMoments.planned.departure.diff(
-    iz101keyMoments.planned.shiftStarts,
-    "m"
-  );
-  const shiftStartedToNow = exampleNow.diff(
-    iz101keyMoments.planned.shiftStarts,
-    "m"
+  const flightsInSelectedDate = flights.map((flight) => {
+    return flight.keyMoments.planned.shiftStarts.isSame(
+      selectedDate.toDate(),
+      "date"
+    ) ? (
+      <FlightWidget flight={flight} key={flight.flightId}></FlightWidget>
+    ) : undefined;
+  });
+  const flightsInSelectedDateFiltered = flightsInSelectedDate.filter(
+    (flight) => flight !== undefined
   );
 
-  const shiftFiledPersentage = Number(
-    (shiftStartedToNow / shiftLength).toFixed(2)
-  );
-
-  const shiftFiledPersentageReal =
-    shiftFiledPersentage <= 0 || shiftFiledPersentage > 1
-      ? 0
-      : shiftFiledPersentage;
+  console.log(flightsInSelectedDateFiltered);
 
   return (
     <div className="   w-full  ">
-      <Button variant={"destructive"}>fdfdfsdf</Button>
-      <div>
-        <div className="text-lg">Upcoming lfights </div>
-
-        <div className=" bg-lightGray" style={{ width: `20rem` }}>
-          <div
-            className="bg-gray"
-            style={{ width: `${shiftFiledPersentageReal * 20}rem` }}
-          >
-            {iz101keyMoments.planned.departure.diff(
-              iz101keyMoments.planned.countersOpening,
-              "m"
-            )}
-          </div>
-        </div>
-        <div> {String(flightSingke)}</div>
-        <Outlet />
+      <DatePicker
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
+      <div className="mt-5 flex flex-col items-center justify-center gap-4 w-full">
+        {flightsInSelectedDateFiltered.length === 0 ? (
+          <div className="font-semibold text-xl">No Flights Found</div>
+        ) : (
+          flightsInSelectedDateFiltered
+        )}
       </div>
-      <DatePicker></DatePicker>
-      <div className="mt-5">
-        <FlightWidget flight={flightSingke!}></FlightWidget>
-        <FlightWidget flight={flightSingke1!}></FlightWidget>
-      </div>
-      <img src=" user.svg" alt="434" className="w-4" />
-      <Test1 />
     </div>
   );
 }

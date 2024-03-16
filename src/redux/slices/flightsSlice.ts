@@ -73,11 +73,11 @@ const initialState: flightInterface[] = [
     flightTime: "2 hours",
     keyMoments: {
       planned: {
-        shiftStarts: dayjs("2024-3-10T01:45"),
-        countersOpening: dayjs("2024-3-10T02:15"),
-        countersClosing: dayjs("2024-3-10T04:15"),
-        bording: dayjs("2024-3-10T05:00"),
-        departure: dayjs("2024-3-10T05:45"),
+        shiftStarts: dayjs("2024-3-11T01:45"),
+        countersOpening: dayjs("2024-3-11T02:15"),
+        countersClosing: dayjs("2024-3-11T04:15"),
+        bording: dayjs("2024-3-11T05:00"),
+        departure: dayjs("2024-3-11T05:45"),
       },
       actual: {
         countersOpening: dayjs("2024-3-10T01:00"),
