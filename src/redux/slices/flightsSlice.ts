@@ -23,7 +23,7 @@ const initialState: flightInterface[] = [
         shiftStarts: dayjs("2024-3-17T11:30"),
         countersOpening: dayjs("2024-3-17T12:00"),
         countersClosing: dayjs("2024-3-17T14:00"),
-        bording: dayjs("2024-3-17T14:45"),
+        bording: dayjs("2024-3-17T14:15"),
         departure: dayjs("2024-3-17T15:00"),
       },
       actual: {
