@@ -13,18 +13,18 @@ const initialState: flightInterface[] = [
   {
     personalRole: "SPV",
 
-    flightNumber: "IZ 773",
+    flightNumber: "WZ 018",
     flightId: "tcp123",
     origin: { name: "Tel Aviv", shortName: "TLV" },
-    destenation: { name: "Grenoble", shortName: "GNB" },
+    destenation: { name: "Sochi", shortName: "AER" },
     flightTime: "2 hours",
     keyMoments: {
       planned: {
-        shiftStarts: dayjs("2024-3-10T03:30"),
-        countersOpening: dayjs("2024-3-10T04:00"),
-        countersClosing: dayjs("2024-3-10T06:00"),
-        bording: dayjs("2024-3-10T06:15"),
-        departure: dayjs("2024-3-10T07:00"),
+        shiftStarts: dayjs("2024-3-17T11:30"),
+        countersOpening: dayjs("2024-3-17T12:00"),
+        countersClosing: dayjs("2024-3-17T14:00"),
+        bording: dayjs("2024-3-17T14:45"),
+        departure: dayjs("2024-3-17T15:00"),
       },
       actual: {
         countersOpening: dayjs("2024-3-1T12:00"),
@@ -61,23 +61,23 @@ const initialState: flightInterface[] = [
     totalPassangers: 3242,
     totalSuitcases: 142,
     totalStrollers: 342,
-    counters: "46-51",
+    counters: "62-64",
   },
   {
     personalRole: "Agent",
 
-    flightNumber: "IZ 415",
+    flightNumber: "IZ 363",
     flightId: "tcp1231",
     origin: { name: "Tel Aviv", shortName: "TLV" },
-    destenation: { name: "Batumi", shortName: "BUS" },
+    destenation: { name: "Sofia", shortName: "SOF" },
     flightTime: "2 hours",
     keyMoments: {
       planned: {
-        shiftStarts: dayjs("2024-3-11T01:45"),
-        countersOpening: dayjs("2024-3-11T02:15"),
-        countersClosing: dayjs("2024-3-11T04:15"),
-        bording: dayjs("2024-3-11T05:00"),
-        departure: dayjs("2024-3-11T05:45"),
+        shiftStarts: dayjs("2024-3-17T15:05"),
+        countersOpening: dayjs("2024-3-17T15:35"),
+        countersClosing: dayjs("2024-3-17T17:35"),
+        bording: dayjs("2024-3-17T17:55"),
+        departure: dayjs("2024-3-17T18:35"),
       },
       actual: {
         countersOpening: dayjs("2024-3-10T01:00"),
@@ -109,7 +109,7 @@ const initialState: flightInterface[] = [
     totalPassangers: 3242,
     totalSuitcases: 142,
     totalStrollers: 342,
-    counters: "34-38",
+    counters: "46-55",
   },
 ];
 
