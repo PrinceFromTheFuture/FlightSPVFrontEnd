@@ -9,6 +9,7 @@ import { store } from "@/redux/store.ts";
 import SingleFlight from "@/pages/singleFlight/SingleFlight.tsx";
 import Root from "./Root.tsx";
 import { SingleFlightLayout } from "./pages/singleFlight/SingleFlightLayout.tsx";
+import Navmenue from "./pages/Navmenue.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <Navmenue>
+            <Home />
+          </Navmenue>
+        ),
       },
       {
         path: "/singleFlight",

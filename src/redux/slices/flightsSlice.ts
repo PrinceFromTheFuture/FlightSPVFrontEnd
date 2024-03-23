@@ -13,18 +13,18 @@ const initialState: flightInterface[] = [
   {
     personalRole: "SPV",
 
-    flightNumber: "WZ 018",
+    flightNumber: "J2 022",
     flightId: "tcp123",
     origin: { name: "Tel Aviv", shortName: "TLV" },
-    destenation: { name: "Sochi", shortName: "AER" },
+    destenation: { name: "Baku", shortName: "GYD" },
     flightTime: "2 hours",
     keyMoments: {
       planned: {
-        shiftStarts: dayjs("2024-3-17T11:30"),
-        countersOpening: dayjs("2024-3-17T12:00"),
-        countersClosing: dayjs("2024-3-17T14:00"),
-        bording: dayjs("2024-3-17T14:15"),
-        departure: dayjs("2024-3-17T15:00"),
+        shiftStarts: dayjs("2024-3-24T08:25"),
+        countersOpening: dayjs("2024-3-24T08:55"),
+        countersClosing: dayjs("2024-3-24T10:55"),
+        bording: dayjs("2024-3-24T11:10"),
+        departure: dayjs("2024-3-24T11:55"),
       },
       actual: {
         countersOpening: dayjs("2024-3-1T12:00"),
@@ -64,7 +64,103 @@ const initialState: flightInterface[] = [
     counters: "62-64",
   },
   {
-    personalRole: "Agent",
+    personalRole: "SPV",
+
+    flightNumber: "IZ 417",
+    flightId: "tcp1231",
+    origin: { name: "Tel Aviv", shortName: "TLV" },
+    destenation: { name: "Tbilisi", shortName: "TBS" },
+    flightTime: "2 hours",
+    keyMoments: {
+      planned: {
+        shiftStarts: dayjs("2024-3-24T11:40"),
+        countersOpening: dayjs("2024-3-24T12:10"),
+        countersClosing: dayjs("2024-3-24T14:10"),
+        bording: dayjs("2024-3-24T14:25"),
+        departure: dayjs("2024-3-24T15:10"),
+      },
+      actual: {
+        countersOpening: dayjs("2024-3-10T01:00"),
+        countersClosing: dayjs("2024-3-10T12:00"),
+        bordingEnd: dayjs("2024-3-10T12:00"),
+        bordingStart: dayjs("2024-3-10T12:00"),
+        offBlock: dayjs("2024-3-10T12:00"),
+        openningBoardingPagia: dayjs("2024-3-10T12:00"),
+      },
+    },
+    crew: {
+      agents: [
+        { name: "Amir", role: "Agent", notes: "ffsdfdsffsdd", agentId: "135" },
+        { name: "Dalia Sidi", role: "Agent", agentId: "122356" },
+        { name: "Hezi Akiva", role: "Agent", agentId: "14fs3f3" },
+      ],
+      SPV: {
+        name: "Yosef Mubarak",
+        role: "SPV",
+        notes: "אדווה מפוטרת",
+        agentId: "143c233",
+      },
+      rampAgent: { name: "adva", role: "Ramp Agent", agentId: "143f3c32" },
+    },
+
+    gate: "432",
+
+    PAGIAAgent: { name: "fdsdva", role: "Agent", agentId: "143c3fsda2" },
+    totalPassangers: 3242,
+    totalSuitcases: 142,
+    totalStrollers: 342,
+    counters: "46-55",
+  },
+  {
+    personalRole: "SPV",
+
+    flightNumber: "IZ 295",
+    flightId: "tcp1231",
+    origin: { name: "Tel Aviv", shortName: "TLV" },
+    destenation: { name: "Bucharest", shortName: "OTP" },
+    flightTime: "2 hours",
+    keyMoments: {
+      planned: {
+        shiftStarts: dayjs("2024-3-24T12:30"),
+        countersOpening: dayjs("2024-3-24T13:00"),
+        countersClosing: dayjs("2024-3-24T15:00"),
+        bording: dayjs("2024-3-24T15:15"),
+        departure: dayjs("2024-3-24T16:00"),
+      },
+      actual: {
+        countersOpening: dayjs("2024-3-10T01:00"),
+        countersClosing: dayjs("2024-3-10T12:00"),
+        bordingEnd: dayjs("2024-3-10T12:00"),
+        bordingStart: dayjs("2024-3-10T12:00"),
+        offBlock: dayjs("2024-3-10T12:00"),
+        openningBoardingPagia: dayjs("2024-3-10T12:00"),
+      },
+    },
+    crew: {
+      agents: [
+        { name: "Amir", role: "Agent", notes: "ffsdfdsffsdd", agentId: "135" },
+        { name: "Dalia Sidi", role: "Agent", agentId: "122356" },
+        { name: "Hezi Akiva", role: "Agent", agentId: "14fs3f3" },
+      ],
+      SPV: {
+        name: "Yosef Mubarak",
+        role: "SPV",
+        notes: "אדווה מפוטרת",
+        agentId: "143c233",
+      },
+      rampAgent: { name: "adva", role: "Ramp Agent", agentId: "143f3c32" },
+    },
+
+    gate: "432",
+
+    PAGIAAgent: { name: "fdsdva", role: "Agent", agentId: "143c3fsda2" },
+    totalPassangers: 3242,
+    totalSuitcases: 142,
+    totalStrollers: 342,
+    counters: "46-55",
+  },
+  {
+    personalRole: "SPV",
 
     flightNumber: "IZ 363",
     flightId: "tcp1231",
@@ -73,11 +169,11 @@ const initialState: flightInterface[] = [
     flightTime: "2 hours",
     keyMoments: {
       planned: {
-        shiftStarts: dayjs("2024-3-17T15:05"),
-        countersOpening: dayjs("2024-3-17T15:35"),
-        countersClosing: dayjs("2024-3-17T17:35"),
-        bording: dayjs("2024-3-17T17:55"),
-        departure: dayjs("2024-3-17T18:35"),
+        shiftStarts: dayjs("2024-3-24T15:05"),
+        countersOpening: dayjs("2024-3-24T15:35"),
+        countersClosing: dayjs("2024-3-24T17:35"),
+        bording: dayjs("2024-3-24T17:50"),
+        departure: dayjs("2024-3-24T18:35"),
       },
       actual: {
         countersOpening: dayjs("2024-3-10T01:00"),
