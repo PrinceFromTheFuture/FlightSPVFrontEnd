@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
 const Root = () => {
+  useEffect(() => {}, []);
   return (
     <div className="py-[6vw] w-contentMaxWidth max-w-screen-md flex justify-center items-center  select-none ">
       <Outlet />

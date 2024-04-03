@@ -28,12 +28,15 @@ const SingleFlight = () => {
     now.isAfter(flight?.keyMoments.planned.shiftStarts) &&
     now.isBefore(flight?.keyMoments.planned.departure);
 
-  if (flight === undefined) {
+  if (!flight) {
     useEffect(() => {
       navigate("/");
     }, []);
     return null;
   } else {
+    useEffect(() => {
+      window.scroll(0, 0);
+    }, []);
     return (
       <div className=" flex justify-center items-center  flex-col relative ">
         <div className=" flex justify-between items-center w-contentMaxWidth">

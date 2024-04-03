@@ -5,6 +5,7 @@ import DatePicker from "../generalComponents/DatePicker";
 
 import FlightWidget from "@/generalComponents/FlightWidget/FlightWidget.tsx";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 function Home() {
   const flights = useAppSelector(allFlights);
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -25,6 +26,12 @@ function Home() {
 
   return (
     <div className="   w-full  ">
+      <Link
+        to="/newFlight"
+        className="fixed bottom-5 right-5 h-8 w-8 bg-blue rounded-2xl flex justify-center items-center z-50 shadow-xl"
+      >
+        <img src="./plane-departure-white.svg" className="w-5" alt="" />
+      </Link>
       <DatePicker
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}

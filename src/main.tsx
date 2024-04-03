@@ -10,6 +10,7 @@ import SingleFlight from "@/pages/singleFlight/SingleFlight.tsx";
 import Root from "./Root.tsx";
 import { SingleFlightLayout } from "./pages/singleFlight/SingleFlightLayout.tsx";
 import Navmenue from "./pages/Navmenue.tsx";
+import AssignNewFlight from "./pages/assignNewFlight/AssignNewFlight.tsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             element: <SingleFlight />,
           },
         ],
+      },
+      {
+        path: "/newFlight",
+        element: <AssignNewFlight />,
       },
     ],
   },

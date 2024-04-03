@@ -56,3 +56,12 @@ export interface flightInterface {
   totalSuitcases: number;
   totalStrollers: number;
 }
+
+export interface tlvAvalableFlight {
+  Flight: string;
+  City: string;
+  date: string;
+  id: string;
+  Counter: null | string;
+}
+[];

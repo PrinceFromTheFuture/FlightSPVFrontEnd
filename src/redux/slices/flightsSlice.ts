@@ -1,213 +1,81 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import dayjs, { Dayjs } from "dayjs";
+import AlltlvAvalableFlights from "./data.json";
 
 import {
   flightCrewType,
   flightInterface,
   flightReportKeyMoments,
+  tlvAvalableFlight,
 } from "@/types";
+import { getAirPortByCityName } from "@/lib/utils";
 
 // Define the initial state using that type
-const initialState: flightInterface[] = [
-  {
-    personalRole: "SPV",
 
-    flightNumber: "J2 022",
-    flightId: "tcp123",
-    origin: { name: "Tel Aviv", shortName: "TLV" },
-    destenation: { name: "Baku", shortName: "GYD" },
-    flightTime: "2 hours",
-    keyMoments: {
-      planned: {
-        shiftStarts: dayjs("2024-3-24T08:25"),
-        countersOpening: dayjs("2024-3-24T08:55"),
-        countersClosing: dayjs("2024-3-24T10:55"),
-        bording: dayjs("2024-3-24T11:10"),
-        departure: dayjs("2024-3-24T11:55"),
-      },
-      actual: {
-        countersOpening: dayjs("2024-3-1T12:00"),
-        countersClosing: dayjs("2024-3-1T12:00"),
-        bordingEnd: dayjs("2024-3-1T12:00"),
-        bordingStart: dayjs("2024-3-1T12:00"),
-        offBlock: dayjs("2024-3-1T12:00"),
-        openningBoardingPagia: dayjs("2024-3-1T12:00"),
-      },
-    },
-    crew: {
-      agents: [
-        {
-          name: "mikel marshel",
-          role: "Agent",
-          notes: "ffsdfdsffsdd",
-          agentId: "1",
+interface initialStateInterface {
+  tlvAvalableFlights: tlvAvalableFlight[];
+  flights: flightInterface[];
+}
+const initialState: initialStateInterface = {
+  tlvAvalableFlights: AlltlvAvalableFlights,
+
+  flights: [
+    {
+      personalRole: "SPV",
+
+      flightNumber: "J2 022",
+      flightId: "tcp123",
+      origin: { name: "Tel Aviv", shortName: "TLV" },
+      destenation: { name: "Baku", shortName: "GYD" },
+      flightTime: "2 hours",
+      keyMoments: {
+        planned: {
+          shiftStarts: dayjs("2024-3-24T08:25"),
+          countersOpening: dayjs("2024-3-24T08:55"),
+          countersClosing: dayjs("2024-3-24T10:55"),
+          bording: dayjs("2024-3-24T11:10"),
+          departure: dayjs("2024-3-24T11:55"),
         },
-        { name: "Tamar Tal", role: "Agent", agentId: "12" },
-        { name: "Amir Waisblay", role: "Agent", agentId: "14fs3" },
-      ],
-      SPV: {
-        name: "Angelica sabash",
-        role: "SPV",
-        notes: "אדווה מפוטרת",
-        agentId: "143c3",
+        actual: {
+          countersOpening: dayjs("2024-3-1T12:00"),
+          countersClosing: dayjs("2024-3-1T12:00"),
+          bordingEnd: dayjs("2024-3-1T12:00"),
+          bordingStart: dayjs("2024-3-1T12:00"),
+          offBlock: dayjs("2024-3-1T12:00"),
+          openningBoardingPagia: dayjs("2024-3-1T12:00"),
+        },
       },
-      rampAgent: { name: "adva", role: "Ramp Agent", agentId: "143c32" },
+      crew: {
+        agents: [
+          {
+            name: "mikel marshel",
+            role: "Agent",
+            notes: "ffsdfdsffsdd",
+            agentId: "1",
+          },
+          { name: "Tamar Tal", role: "Agent", agentId: "12" },
+          { name: "Amir Waisblay", role: "Agent", agentId: "14fs3" },
+        ],
+        SPV: {
+          name: "Angelica sabash",
+          role: "SPV",
+          notes: "אדווה מפוטרת",
+          agentId: "143c3",
+        },
+        rampAgent: { name: "adva", role: "Ramp Agent", agentId: "143c32" },
+      },
+
+      gate: "432",
+
+      PAGIAAgent: { name: "fdsdva", role: "Agent", agentId: "143c3fsda2" },
+      totalPassangers: 3242,
+      totalSuitcases: 142,
+      totalStrollers: 342,
+      counters: "62-64",
     },
-
-    gate: "432",
-
-    PAGIAAgent: { name: "fdsdva", role: "Agent", agentId: "143c3fsda2" },
-    totalPassangers: 3242,
-    totalSuitcases: 142,
-    totalStrollers: 342,
-    counters: "62-64",
-  },
-  {
-    personalRole: "SPV",
-
-    flightNumber: "IZ 417",
-    flightId: "tcp1231",
-    origin: { name: "Tel Aviv", shortName: "TLV" },
-    destenation: { name: "Tbilisi", shortName: "TBS" },
-    flightTime: "2 hours",
-    keyMoments: {
-      planned: {
-        shiftStarts: dayjs("2024-3-24T11:40"),
-        countersOpening: dayjs("2024-3-24T12:10"),
-        countersClosing: dayjs("2024-3-24T14:10"),
-        bording: dayjs("2024-3-24T14:25"),
-        departure: dayjs("2024-3-24T15:10"),
-      },
-      actual: {
-        countersOpening: dayjs("2024-3-10T01:00"),
-        countersClosing: dayjs("2024-3-10T12:00"),
-        bordingEnd: dayjs("2024-3-10T12:00"),
-        bordingStart: dayjs("2024-3-10T12:00"),
-        offBlock: dayjs("2024-3-10T12:00"),
-        openningBoardingPagia: dayjs("2024-3-10T12:00"),
-      },
-    },
-    crew: {
-      agents: [
-        { name: "Amir", role: "Agent", notes: "ffsdfdsffsdd", agentId: "135" },
-        { name: "Dalia Sidi", role: "Agent", agentId: "122356" },
-        { name: "Hezi Akiva", role: "Agent", agentId: "14fs3f3" },
-      ],
-      SPV: {
-        name: "Yosef Mubarak",
-        role: "SPV",
-        notes: "אדווה מפוטרת",
-        agentId: "143c233",
-      },
-      rampAgent: { name: "adva", role: "Ramp Agent", agentId: "143f3c32" },
-    },
-
-    gate: "432",
-
-    PAGIAAgent: { name: "fdsdva", role: "Agent", agentId: "143c3fsda2" },
-    totalPassangers: 3242,
-    totalSuitcases: 142,
-    totalStrollers: 342,
-    counters: "46-55",
-  },
-  {
-    personalRole: "SPV",
-
-    flightNumber: "IZ 295",
-    flightId: "tcp1231",
-    origin: { name: "Tel Aviv", shortName: "TLV" },
-    destenation: { name: "Bucharest", shortName: "OTP" },
-    flightTime: "2 hours",
-    keyMoments: {
-      planned: {
-        shiftStarts: dayjs("2024-3-24T12:30"),
-        countersOpening: dayjs("2024-3-24T13:00"),
-        countersClosing: dayjs("2024-3-24T15:00"),
-        bording: dayjs("2024-3-24T15:15"),
-        departure: dayjs("2024-3-24T16:00"),
-      },
-      actual: {
-        countersOpening: dayjs("2024-3-10T01:00"),
-        countersClosing: dayjs("2024-3-10T12:00"),
-        bordingEnd: dayjs("2024-3-10T12:00"),
-        bordingStart: dayjs("2024-3-10T12:00"),
-        offBlock: dayjs("2024-3-10T12:00"),
-        openningBoardingPagia: dayjs("2024-3-10T12:00"),
-      },
-    },
-    crew: {
-      agents: [
-        { name: "Amir", role: "Agent", notes: "ffsdfdsffsdd", agentId: "135" },
-        { name: "Dalia Sidi", role: "Agent", agentId: "122356" },
-        { name: "Hezi Akiva", role: "Agent", agentId: "14fs3f3" },
-      ],
-      SPV: {
-        name: "Yosef Mubarak",
-        role: "SPV",
-        notes: "אדווה מפוטרת",
-        agentId: "143c233",
-      },
-      rampAgent: { name: "adva", role: "Ramp Agent", agentId: "143f3c32" },
-    },
-
-    gate: "432",
-
-    PAGIAAgent: { name: "fdsdva", role: "Agent", agentId: "143c3fsda2" },
-    totalPassangers: 3242,
-    totalSuitcases: 142,
-    totalStrollers: 342,
-    counters: "46-55",
-  },
-  {
-    personalRole: "SPV",
-
-    flightNumber: "IZ 363",
-    flightId: "tcp1231",
-    origin: { name: "Tel Aviv", shortName: "TLV" },
-    destenation: { name: "Sofia", shortName: "SOF" },
-    flightTime: "2 hours",
-    keyMoments: {
-      planned: {
-        shiftStarts: dayjs("2024-3-24T15:05"),
-        countersOpening: dayjs("2024-3-24T15:35"),
-        countersClosing: dayjs("2024-3-24T17:35"),
-        bording: dayjs("2024-3-24T17:50"),
-        departure: dayjs("2024-3-24T18:35"),
-      },
-      actual: {
-        countersOpening: dayjs("2024-3-10T01:00"),
-        countersClosing: dayjs("2024-3-10T12:00"),
-        bordingEnd: dayjs("2024-3-10T12:00"),
-        bordingStart: dayjs("2024-3-10T12:00"),
-        offBlock: dayjs("2024-3-10T12:00"),
-        openningBoardingPagia: dayjs("2024-3-10T12:00"),
-      },
-    },
-    crew: {
-      agents: [
-        { name: "Amir", role: "Agent", notes: "ffsdfdsffsdd", agentId: "135" },
-        { name: "Dalia Sidi", role: "Agent", agentId: "122356" },
-        { name: "Hezi Akiva", role: "Agent", agentId: "14fs3f3" },
-      ],
-      SPV: {
-        name: "Yosef Mubarak",
-        role: "SPV",
-        notes: "אדווה מפוטרת",
-        agentId: "143c233",
-      },
-      rampAgent: { name: "adva", role: "Ramp Agent", agentId: "143f3c32" },
-    },
-
-    gate: "432",
-
-    PAGIAAgent: { name: "fdsdva", role: "Agent", agentId: "143c3fsda2" },
-    totalPassangers: 3242,
-    totalSuitcases: 142,
-    totalStrollers: 342,
-    counters: "46-55",
-  },
-];
+  ],
+};
 
 export const flightsSlice = createSlice({
   name: "flights",
@@ -219,7 +87,7 @@ export const flightsSlice = createSlice({
       state,
       action: PayloadAction<{ flightId: string; agents: flightCrewType }>
     ) => {
-      const requestedFlight = state.find((flight) => {
+      const requestedFlight = state.flights.find((flight) => {
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
@@ -234,7 +102,7 @@ export const flightsSlice = createSlice({
         value: number;
       }>
     ) => {
-      const requestedFlight = state.find((flight) => {
+      const requestedFlight = state.flights.find((flight) => {
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
@@ -249,7 +117,7 @@ export const flightsSlice = createSlice({
         value: Dayjs;
       }>
     ) => {
-      const requestedFlight = state.find((flight) => {
+      const requestedFlight = state.flights.find((flight) => {
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
@@ -264,7 +132,7 @@ export const flightsSlice = createSlice({
         value: string;
       }>
     ) => {
-      const requestedFlight = state.find((flight) => {
+      const requestedFlight = state.flights.find((flight) => {
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
@@ -283,7 +151,7 @@ export const flightsSlice = createSlice({
         destenation: string;
       }>
     ) => {
-      const requestedFlight = state.find((flight) => {
+      const requestedFlight = state.flights.find((flight) => {
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
@@ -305,6 +173,98 @@ export const flightsSlice = createSlice({
         requestedFlight.destenation.shortName = action.payload.destenation;
       }
     },
+    createNewFlightFromTLVFlight: (
+      state,
+      action: PayloadAction<{
+        tlvFlight: tlvAvalableFlight;
+      }>
+    ) => {
+      if (
+        !state.flights.find(
+          (flight) => flight.flightId === action.payload.tlvFlight.id
+        )
+      ) {
+        const newFlight: flightInterface = {
+          personalRole: "SPV",
+          flightNumber: action.payload.tlvFlight.Flight,
+          flightId: action.payload.tlvFlight.id,
+          origin: {
+            name: "Tel Aviv",
+            shortName: "TLV",
+          },
+          destenation: {
+            name: action.payload.tlvFlight.City,
+            shortName: getAirPortByCityName(action.payload.tlvFlight.City),
+          },
+          flightTime: "3 hours",
+          counters: action.payload.tlvFlight.Counter || "",
+          keyMoments: {
+            planned: {
+              shiftStarts: dayjs(action.payload.tlvFlight.date).subtract(
+                210,
+                "minutes"
+              ),
+              countersOpening: dayjs(action.payload.tlvFlight.date).subtract(
+                180,
+                "minutes"
+              ),
+              countersClosing: dayjs(action.payload.tlvFlight.date).subtract(
+                60,
+                "minutes"
+              ),
+              bording: dayjs(action.payload.tlvFlight.date).subtract(
+                45,
+                "minutes"
+              ),
+              departure: dayjs(action.payload.tlvFlight.date),
+            },
+            actual: {
+              countersOpening: dayjs(action.payload.tlvFlight.date),
+              countersClosing: dayjs(action.payload.tlvFlight.date),
+              bordingEnd: dayjs(action.payload.tlvFlight.date),
+              bordingStart: dayjs(action.payload.tlvFlight.date),
+              offBlock: dayjs(action.payload.tlvFlight.date),
+              openningBoardingPagia: dayjs(action.payload.tlvFlight.date),
+            },
+          },
+          crew: {
+            agents: [
+              {
+                name: "32",
+                role: "SPV",
+                notes: "string",
+                agentId: "43245f3",
+              },
+            ],
+            SPV: {
+              name: "32",
+              role: "SPV",
+              notes: "string",
+              agentId: "43245f3",
+            },
+            rampAgent: {
+              name: "32",
+              role: "SPV",
+              notes: "string",
+              agentId: "43245f3",
+            },
+          },
+
+          gate: "E1A",
+          PAGIAAgent: {
+            name: "32",
+            role: "SPV",
+            notes: "string",
+            agentId: "43245f3",
+          },
+          totalPassangers: 342,
+          totalSuitcases: 423,
+          totalStrollers: 123,
+        };
+
+        state.flights.push(newFlight);
+      }
+    },
   },
 });
 
@@ -314,12 +274,17 @@ export const {
   updateFlightKeyMomentsActual,
   updateFlightPagiaAgent,
   updateFlightMetaData,
+  createNewFlightFromTLVFlight,
 } = flightsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const allFlights = (state: RootState) => state.flights;
+
+export const allTLVFlights = (state: RootState) => {
+  return state.flights.tlvAvalableFlights;
+};
+export const allFlights = (state: RootState) => state.flights.flights;
 export const oneFlight = (state: RootState, flightId: string) => {
-  return state.flights.find((flight) => flight.flightId === flightId);
+  return state.flights.flights.find((flight) => flight.flightId === flightId);
 };
 
 export const flightReducer = flightsSlice.reducer;
