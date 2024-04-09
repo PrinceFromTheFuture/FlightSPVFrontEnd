@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { useAppSelector } from "@/hooks/hooks";
 import { allAgentsSelector } from "@/redux/slices/agentsSlice";
 import {
   Popover,
@@ -22,9 +22,9 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import { editAgentsHook } from "@/hooks/editAgentsHook";
-import { oneFlight, updateFlightAgents } from "@/redux/slices/flightsSlice";
+import { oneFlight } from "@/redux/slices/flightsSlice";
 import { useParams } from "react-router-dom";
+import { agentType } from "@/types";
 
 const EditFlightAgents = () => {
   const { flightID } = useParams();
@@ -36,21 +36,18 @@ const EditFlightAgents = () => {
   const flight = useAppSelector((state) => oneFlight(state, flightID));
   if (flight) {
     const allAgents = useAppSelector(allAgentsSelector);
-    const dispatch = useAppDispatch();
 
     const [isAgentSelectOpen, setIsAgentSelectOpen] = useState(false);
 
-    const {
-      flightAgents,
-      selectedAgent,
-      setSelectedAgent,
-      modifyFlightAgents,
-    } = editAgentsHook(flight.crew);
+    const [selectedAgent, setSelectedAgent] = useState<{
+      agent: agentType;
+      notes?: string;
+    }>(flight.crew.SPV);
 
     let imgSrc;
-    if (selectedAgent?.role === "Ramp Agent") {
+    if (selectedAgent.agent.role === "Ramp Agent") {
       imgSrc = "/ramp.svg";
-    } else if (selectedAgent?.role === "SPV") {
+    } else if (selectedAgent.agent.role === "SPV") {
       imgSrc = "/spv.svg";
     } else {
       imgSrc = "/user-blue.svg";
@@ -70,16 +67,13 @@ const EditFlightAgents = () => {
                 <div className="flex justify-start items-end gap-3">
                   <img src={imgSrc} alt="" className="w-[24px]" />
                   <div className="text-blue font-bold text-xl  ">
-                    {selectedAgent.name}, {selectedAgent.role}
+                    {selectedAgent.agent.name}, {selectedAgent.agent.role}
                   </div>
                 </div>
 
-                {selectedAgent.role !== "SPV" &&
-                  selectedAgent.role !== "Ramp Agent" && (
-                    <div
-                      className="bg-blue flex justify-center items-center p-2 rounded-lg"
-                      onClick={modifyFlightAgents.handleDeleteAgent}
-                    >
+                {selectedAgent.agent.role !== "SPV" &&
+                  selectedAgent.agent.role !== "Ramp Agent" && (
+                    <div className="bg-blue flex justify-center items-center p-2 rounded-lg">
                       <img src="/trash-can-xmark.svg" alt="" className="w-4" />
                     </div>
                   )}
@@ -94,7 +88,7 @@ const EditFlightAgents = () => {
                 >
                   <PopoverTrigger asChild>
                     <div className="w-full rounded-lg p-2 bg-lightGray justify-center text-blue flex items-center  text-md font-semibold gap-2 ">
-                      <div>{selectedAgent.name}</div>
+                      <div>{selectedAgent.agent.name}</div>
                       <ChevronsUpDown className=" " color="#1F2A3F" />
                     </div>
                   </PopoverTrigger>
@@ -112,22 +106,16 @@ const EditFlightAgents = () => {
                             <CommandItem
                               className={cn(
                                 " text-md font-semibold p-2  rounded-lg  ",
-                                selectedAgent.name === agent.name &&
+                                selectedAgent.agent.name === agent.name &&
                                   "bg-blue text-white "
                               )}
                               key={agent.agentId}
                               value={agent.name}
-                              onSelect={(newAgentName) => {
-                                modifyFlightAgents.handleAgentNameChange(
-                                  newAgentName
-                                );
-                                setIsAgentSelectOpen(false);
-                              }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  selectedAgent.name === agent.name
+                                  selectedAgent.agent.name === agent.name
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
@@ -148,11 +136,6 @@ const EditFlightAgents = () => {
                 <textarea
                   className="w-full p-2 border-2 border-lightGray outline-none rounded-lg h-[60px] "
                   value={selectedAgent.notes || ""}
-                  onChange={(event) =>
-                    modifyFlightAgents.handleAgentNotesChange(
-                      event.target.value
-                    )
-                  }
                 ></textarea>
               </div>
             </div>
@@ -163,43 +146,32 @@ const EditFlightAgents = () => {
             )}
           >
             <Agent
-              agent={flightAgents.SPV}
+              agent={flight.crew.SPV}
               selectedAgent={selectedAgent}
-              onClick={() => setSelectedAgent(flightAgents.SPV)}
+              onClick={() => setSelectedAgent(flight.crew.SPV)}
             />
 
             <Agent
-              agent={flightAgents.rampAgent}
+              agent={flight.crew.rampAgent}
               selectedAgent={selectedAgent}
-              onClick={() => setSelectedAgent(flightAgents.rampAgent)}
+              onClick={() => setSelectedAgent(flight.crew.rampAgent)}
             />
-            {flightAgents.agents.map((agent) => {
+            {flight.crew.agents.map((agent) => {
               return (
                 <Agent
-                  key={agent.agentId}
+                  key={agent.agent.agentId}
                   agent={agent}
                   selectedAgent={selectedAgent}
                   onClick={() => setSelectedAgent(agent)}
                 />
               );
             })}
-            <div
-              className="bg-blue w-full py-2.5 rounded-xl flex items-center justify-center font-semibold text-sm text-white gap-2"
-              onClick={modifyFlightAgents.handleAddAgent}
-            >
+            <div className="bg-blue w-full py-2.5 rounded-xl flex items-center justify-center font-semibold text-sm text-white gap-2">
               new Agent
               <Plus />
             </div>
           </div>
           <DrawerClose
-            onClick={() =>
-              dispatch(
-                updateFlightAgents({
-                  flightId: flight.flightId,
-                  agents: flightAgents,
-                })
-              )
-            }
             className={cn(
               "bg-blue w-full py-3 text-white font-semibold font-sm rounded-xl",
               !selectedAgent && "bg-blue/80"

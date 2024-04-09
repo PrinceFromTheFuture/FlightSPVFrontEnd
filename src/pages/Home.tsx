@@ -11,7 +11,7 @@ function Home() {
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
   const flightsInSelectedDate = flights.map((flight) => {
-    return flight.keyMoments.planned.shiftStarts.isSame(
+    return dayjs(flight.keyMoments.planned.shiftStarts).isSame(
       selectedDate.toDate(),
       "date"
     ) ? (
@@ -21,8 +21,6 @@ function Home() {
   const flightsInSelectedDateFiltered = flightsInSelectedDate.filter(
     (flight) => flight !== undefined
   );
-
-  console.log(flightsInSelectedDateFiltered);
 
   return (
     <div className="   w-full  ">

@@ -1,5 +1,5 @@
 import { flightInterface } from "@/types";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import EventWidget from "./EventWidget";
 
 interface FlightTimeLineProps {
@@ -7,11 +7,11 @@ interface FlightTimeLineProps {
 }
 const FlightTimeLine = ({ flight }: FlightTimeLineProps) => {
   const events = flight.keyMoments.planned;
-  const timeFrame = events.departure.diff(events.shiftStarts, "minutes");
+  const timeFrame = dayjs(events.departure).diff(events.shiftStarts, "minutes");
   const devider = timeFrame / 100;
 
-  const getEventPosition = (event: Dayjs): number => {
-    const diffFromBeggining = event.diff(events.shiftStarts, "minutes");
+  const getEventPosition = (event: string): number => {
+    const diffFromBeggining = dayjs(event).diff(events.shiftStarts, "minutes");
     const eventPercentage = diffFromBeggining / devider;
     return eventPercentage;
   };
@@ -24,7 +24,7 @@ const FlightTimeLine = ({ flight }: FlightTimeLineProps) => {
         <div
           className={`absolute w-full bg-blue`}
           style={{
-            height: `${(getEventPosition(now) / 70) * 60}%`,
+            height: `${(getEventPosition(now.toISOString()) / 70) * 60}%`,
           }}
         >
           {" "}
@@ -32,29 +32,29 @@ const FlightTimeLine = ({ flight }: FlightTimeLineProps) => {
       </div>
       <div className=" relative w-full  ml-3">
         <EventWidget
-          date={events.shiftStarts}
+          stringDate={events.shiftStarts}
           eventName="Start Of Shift"
           position={getEventPosition(events.shiftStarts)}
         />
         <EventWidget
-          date={events.countersOpening}
+          stringDate={events.countersOpening}
           eventName="Opening Counters"
           position={getEventPosition(events.countersOpening)}
         />
         <EventWidget
-          date={events.countersClosing}
+          stringDate={events.countersClosing}
           eventName="Closing Counters"
           isSameLine={true}
           position={getEventPosition(events.countersClosing)}
         />
         <EventWidget
-          date={events.bording}
+          stringDate={events.bording}
           eventName="Bording"
           position={getEventPosition(events.bording)}
         />
 
         <EventWidget
-          date={events.departure}
+          stringDate={events.departure}
           eventName="Departure"
           position={getEventPosition(events.departure)}
         />

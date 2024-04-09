@@ -1,20 +1,3 @@
-import { Dayjs } from "dayjs";
-
-export type agentType = {
-  name: string;
-  role: "SPV" | "Agent" | "Ramp Agent";
-  notes?: string;
-  agentId: string;
-};
-export type flightCrewType = {
-  agents: agentType[];
-  SPV: agentType;
-  rampAgent: agentType;
-};
-type airportType = {
-  name: string;
-  shortName: string;
-};
 export type flightReportKeyMoments =
   | "countersOpening"
   | "countersClosing"
@@ -23,45 +6,67 @@ export type flightReportKeyMoments =
   | "openningBoardingPagia"
   | "offBlock";
 
-export interface flightInterface {
-  personalRole: "SPV" | "Agent";
+export type agentType = {
+  name: string;
+  role: "SPV" | "Agent" | "Ramp Agent";
+  workerID: string;
+  agentId: string;
+  phone: string;
+  email: string;
+  _id: string;
+  __v?: string;
+};
+export type flightCrewType = {
+  agents: { agent: agentType; notes?: string }[];
+  SPV: { agent: agentType; notes?: string };
+  rampAgent: { agent: agentType; notes?: string };
+};
+export type airportType = {
+  _id: string;
+  code: string;
+  name: string;
+  airportId: string;
+};
+export interface tlvFlightInterface {
+  dateString: string;
   flightNumber: string;
-  flightId: string;
-  origin: airportType;
-  destenation: airportType;
-  flightTime: string;
+  city: string;
   counters: string;
+  localApplicationId: number;
+}
+
+export interface flightInterface {
+  crew: flightCrewType;
   keyMoments: {
     planned: {
-      shiftStarts: Dayjs;
-      countersOpening: Dayjs;
-      countersClosing: Dayjs;
-      bording: Dayjs;
-      departure: Dayjs;
+      shiftStarts: string;
+      countersOpening: string;
+      countersClosing: string;
+      bording: string;
+      departure: string;
     };
     actual: {
-      countersOpening: Dayjs;
-      countersClosing: Dayjs;
-      bordingEnd: Dayjs;
-      bordingStart: Dayjs;
-      offBlock: Dayjs;
-      openningBoardingPagia: Dayjs;
+      countersOpening: string;
+      countersClosing: string;
+      bordingEnd: string;
+      bordingStart: string;
+      offBlock: string;
+      openningBoardingPagia: string;
     };
   };
-  crew: flightCrewType;
-
+  _id: string;
+  personalRole: string;
+  counters: string;
+  destenation: airportType;
+  origin: airportType;
+  flightNumber: string;
   gate: string;
-  PAGIAAgent: agentType;
-  totalPassangers: number;
-  totalSuitcases: number;
-  totalStrollers: number;
+  flightId: string;
+  flightTime: string;
+  PAGIAAgent: string;
+  totalPassangers: 323;
+  totalStrollers: 323;
+  totalSuitcases: 323;
+  localApplicationId: number;
+  __v?: 0;
 }
-
-export interface tlvAvalableFlight {
-  Flight: string;
-  City: string;
-  date: string;
-  id: string;
-  Counter: null | string;
-}
-[];

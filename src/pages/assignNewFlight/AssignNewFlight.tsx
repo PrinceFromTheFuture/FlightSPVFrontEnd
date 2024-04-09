@@ -1,30 +1,31 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { getAirPortByCityName } from "@/lib/utils";
-import {
-  allTLVFlights,
-  createNewFlightFromTLVFlight,
-} from "@/redux/slices/flightsSlice";
-import { tlvAvalableFlight } from "@/types";
+import { useAppSelector } from "@/hooks/hooks";
+
+import { tlvFlightInterface } from "../../types.ts";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import TLVflightComponent from "./TLVflightComponent.tsx";
 
 const AssignNewFlight = () => {
-  const dsipatch = useAppDispatch();
-  const tlvFlights = useAppSelector(allTLVFlights);
+  const tlvFlights = useAppSelector((state) => state.flights.tlvFlights);
 
-  let tlvFlightsWithDayLabel: (tlvAvalableFlight | string)[] = [
-    tlvFlights[0].date,
+  let tlvFlightsWithDayLabel: (tlvFlightInterface | string)[] = [
+    tlvFlights[0].dateString,
   ];
 
   for (let i = 0; i < tlvFlights.length; i++) {
+    // Add the current flight
+    tlvFlightsWithDayLabel.push(tlvFlights[i]);
+
+    // Check if there's a next flight and if its date is different
     if (
-      i > 0 &&
-      dayjs(tlvFlights[i].date).isSame(dayjs(tlvFlights[i - 1].date), "date")
+      tlvFlights[i + 1] &&
+      !dayjs(tlvFlights[i].dateString).isSame(
+        dayjs(tlvFlights[i + 1].dateString),
+        "date"
+      )
     ) {
-      tlvFlightsWithDayLabel.push(tlvFlights[i]);
-    } else {
-      tlvFlightsWithDayLabel.push(tlvFlights[i]);
-      tlvFlightsWithDayLabel.push(tlvFlights[i + 1].date);
+      // Add a label for the next flight's date
+      tlvFlightsWithDayLabel.push(tlvFlights[i + 1].dateString);
     }
   }
 
@@ -36,34 +37,7 @@ const AssignNewFlight = () => {
         </div>
       );
     } else {
-      return (
-        <Link
-          to={`/singleFlight/${flightOrLabel.id}`}
-          onClick={() => {
-            dsipatch(
-              createNewFlightFromTLVFlight({ tlvFlight: flightOrLabel })
-            );
-          }}
-          className="bg-lightGray w-full rounded-xl p-3 flex items-center justify-between transition-all hover:bg-gray cursor-pointer"
-        >
-          <img src="./plane-departure-blue.svg " className="w-5" alt="" />
-          <div>
-            <div className=" text-gray font-semibold text-sm">Flight No.</div>
-            <div className="text-blue font-bold text-xl">
-              {flightOrLabel.Flight}
-            </div>
-          </div>
-          <div>
-            <div className=" text-gray font-semibold text-sm">Departure</div>
-            <div className="text-blue font-bold text-xl">
-              {dayjs(flightOrLabel.date).format("HH:mm")}
-            </div>
-          </div>
-          <div className="text-blue font-bold text-xl">
-            {getAirPortByCityName(flightOrLabel.City)}
-          </div>
-        </Link>
-      );
+      return <TLVflightComponent TLVFlight={flightOrLabel} />;
     }
   });
   return (

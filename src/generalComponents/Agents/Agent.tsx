@@ -9,22 +9,23 @@ import {
 import { cn } from "@/lib/utils";
 
 interface AgentProps {
-  agent: agentType;
-  selectedAgent?: agentType;
+  agent: { agent: agentType; notes?: string };
+  selectedAgent?: { agent: agentType; notes?: string };
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 const Agent = ({ agent, selectedAgent, onClick }: AgentProps) => {
   let imgSrc;
-  if (agent.role === "Ramp Agent") {
+  if (agent.agent.role === "Ramp Agent") {
     imgSrc = "/ramp.svg";
-  } else if (agent.role === "SPV") {
+  } else if (agent.agent.role === "SPV") {
     imgSrc = "/spv.svg";
   } else {
     imgSrc = "/user-blue.svg";
   }
 
-  const isSelected = agent.agentId === selectedAgent?.agentId ? true : false;
+  const isSelected =
+    agent.agent.agentId === selectedAgent?.agent.agentId ? true : false;
 
   return (
     <div
@@ -40,8 +41,12 @@ const Agent = ({ agent, selectedAgent, onClick }: AgentProps) => {
           <img src={imgSrc} alt="fdsf" />
         </div>
         <div className="ml-4 flex flex-col ">
-          <div className="text-gray text-sm font-semibold ">{agent.role}</div>
-          <div className="   text-lg font-bold text-blue">{agent.name}</div>
+          <div className="text-gray text-sm font-semibold ">
+            {agent.agent.role}
+          </div>
+          <div className="   text-lg font-bold text-blue">
+            {agent.agent.name}
+          </div>
         </div>
       </div>
       {agent.notes != undefined && agent.notes != "" && (
@@ -53,7 +58,7 @@ const Agent = ({ agent, selectedAgent, onClick }: AgentProps) => {
           </DialogTrigger>
           <DialogContent className="">
             <div className=" text-blue font-bold text-2xl  ">
-              {agent.name} note
+              {agent.agent.name} note
             </div>
             <div className="text-gray text-md font-semibold ">
               {agent.notes}

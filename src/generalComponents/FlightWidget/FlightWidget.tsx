@@ -31,7 +31,9 @@ const FlightWidget = ({ flight }: FlightWidgetProps) => {
         <div>
           <Details
             title="Start of shift"
-            value={flight.keyMoments.planned.shiftStarts.format("HH:mm A")}
+            value={dayjs(flight.keyMoments.planned.shiftStarts).format(
+              "HH:mm A"
+            )}
           />
 
           <Details title="Flight no." value={flight.flightNumber} />
@@ -42,7 +44,7 @@ const FlightWidget = ({ flight }: FlightWidgetProps) => {
         <div>
           <Details
             title="Departure"
-            value={flight.keyMoments.planned.departure.format("HH:mm A")}
+            value={dayjs(flight.keyMoments.planned.departure).format("HH:mm A")}
           />
           <Details title="Role" value={flight.personalRole} />
         </div>

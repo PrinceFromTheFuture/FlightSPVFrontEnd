@@ -1,20 +1,21 @@
 import { cn } from "@/lib/utils";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 interface EventWidgetProps {
   position: number;
   eventName: string;
-  date: Dayjs;
+  stringDate: string;
   isSameLine?: boolean;
 }
 
 const EventWidget = ({
   position,
   eventName,
-  date,
+  stringDate,
   isSameLine,
 }: EventWidgetProps) => {
   const now = dayjs();
+  const date = dayjs(stringDate);
   const isEventPassed = date.isBefore(now);
   return (
     <div className=" absolute" style={{ top: `${position - 2}%` }}>

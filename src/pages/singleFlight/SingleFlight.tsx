@@ -94,7 +94,7 @@ const SingleFlight = () => {
           <div className=" flex justify-between items-center w-full mb-5 mt-2.5">
             <div className="">
               <div className=" text-2xl font-bold text-blue">
-                {flight.origin.shortName}
+                {flight.origin.code}
               </div>
               <div className=" text-gray text-sm font-semibold ">
                 {flight.origin.name}
@@ -102,7 +102,7 @@ const SingleFlight = () => {
             </div>
             <div>
               <div className=" text-2xl font-bold text-blue">
-                {flight.destenation.shortName}
+                {flight.destenation.code}
               </div>
               <div className=" text-gray text-sm font-semibold ">
                 {flight.destenation.name}
