@@ -14,8 +14,9 @@ export const getAllFlights = createAsyncThunk(
   "flights/getAllFlights",
   async () => {
     const response = await axios.get(
-      "http://localhost:3000/flights/allFlights"
+      `${import.meta.env.VITE_SERVER_BASE_ROUTE}/flights/allFlights`
     );
+    console.log(response.data);
     return response.data;
   }
 );
@@ -23,7 +24,7 @@ export const getAllTLVFlights = createAsyncThunk(
   "flights/getAllTLV",
   async () => {
     const response = await axios.post(
-      "http://localhost:3000/flights/tlvFlights",
+      `${import.meta.env.VITE_SERVER_BASE_ROUTE}/flights/tlvFlights`,
       {
         from: dayjs().format("YYYY-MM-DD"),
         to: dayjs().add(7, "days").format("YYYY-MM-DD"),

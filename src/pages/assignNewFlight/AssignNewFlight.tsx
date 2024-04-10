@@ -1,45 +1,30 @@
 import { useAppSelector } from "@/hooks/hooks";
 
-import { tlvFlightInterface } from "../../types.ts";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import TLVflightComponent from "./TLVflightComponent.tsx";
 
 const AssignNewFlight = () => {
   const tlvFlights = useAppSelector((state) => state.flights.tlvFlights);
-
-  let tlvFlightsWithDayLabel: (tlvFlightInterface | string)[] = [
-    tlvFlights[0].dateString,
-  ];
+  let test: any = [];
 
   for (let i = 0; i < tlvFlights.length; i++) {
-    // Add the current flight
-    tlvFlightsWithDayLabel.push(tlvFlights[i]);
-
-    // Check if there's a next flight and if its date is different
     if (
-      tlvFlights[i + 1] &&
-      !dayjs(tlvFlights[i].dateString).isSame(
-        dayjs(tlvFlights[i + 1].dateString),
-        "date"
-      )
+      i > 0 &&
+      dayjs(tlvFlights[i].dateString).isSame(
+        tlvFlights[i - 1].dateString,
+        "day"
+      ) === true
     ) {
-      // Add a label for the next flight's date
-      tlvFlightsWithDayLabel.push(tlvFlights[i + 1].dateString);
-    }
-  }
-
-  const tlvFlightUI = tlvFlightsWithDayLabel.map((flightOrLabel) => {
-    if (typeof flightOrLabel === "string") {
-      return (
-        <div className=" text-gray text-xl mt-2 font-semibold ml-2">
-          {dayjs(flightOrLabel).format("ddd, D.MM")}
+      test.push(<TLVflightComponent TLVFlight={tlvFlights[i]} />);
+    } else {
+      test.push(
+        <div className=" text-gray text-2xl font-semibold mt-4">
+          {dayjs(tlvFlights[i].dateString).format("ddd, DD.MM")}{" "}
         </div>
       );
-    } else {
-      return <TLVflightComponent TLVFlight={flightOrLabel} />;
     }
-  });
+  }
   return (
     <div>
       <div className=" flex justify-between items-center w-contentMaxWidth">
@@ -51,7 +36,7 @@ const AssignNewFlight = () => {
         </Link>
       </div>
       <div className="flex justify-start items-start flex-col gap-3">
-        {tlvFlightUI}
+        {test}
       </div>
     </div>
   );

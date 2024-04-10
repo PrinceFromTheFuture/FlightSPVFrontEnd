@@ -16,7 +16,9 @@ const TLVflightComponent = ({ TLVFlight }: TLVflightComponentProps) => {
 
   const handleTLVFlightClicked = async () => {
     const response = await axios.post<flightInterface>(
-      "http://localhost:3000/flights/saveNewFlightFromTLVFlight",
+      `${
+        import.meta.env.VITE_SERVER_BASE_ROUTE
+      }/flights/saveNewFlightFromTLVFlight`,
       TLVFlight
     );
     const newFlight = response.data;
