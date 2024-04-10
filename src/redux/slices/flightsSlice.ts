@@ -10,10 +10,15 @@ import {
   tlvFlightInterface,
 } from "@/types";
 
-export const getAllFlights = createAsyncThunk("flights/getAll", async () => {
-  const response = await axios.get("http://localhost:3000/flights/allFlights");
-  return response.data;
-});
+export const getAllFlights = createAsyncThunk(
+  "flights/getAllFlights",
+  async () => {
+    const response = await axios.get(
+      "http://localhost:3000/flights/allFlights"
+    );
+    return response.data;
+  }
+);
 export const getAllTLVFlights = createAsyncThunk(
   "flights/getAllTLV",
   async () => {
@@ -68,7 +73,6 @@ export const flightsSlice = createSlice({
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
-        requestedFlight[action.payload.type] = action.payload.value;
       }
     },
     updateFlightKeyMomentsActual: (
@@ -83,8 +87,6 @@ export const flightsSlice = createSlice({
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
-        requestedFlight.keyMoments.actual[action.payload.type] =
-          action.payload.value;
       }
     },
     updateFlightPagiaAgent: (
@@ -98,7 +100,6 @@ export const flightsSlice = createSlice({
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
-        requestedFlight.PAGIAAgent.name = action.payload.value;
       }
     },
     updateFlightMetaData: (
@@ -121,18 +122,8 @@ export const flightsSlice = createSlice({
         requestedFlight.gate = action.payload.gate;
         requestedFlight.counters = action.payload.counters;
 
-        requestedFlight.keyMoments.planned.shiftStarts =
-          action.payload.departure.subtract(3.5, "hours");
-        requestedFlight.keyMoments.planned.countersOpening =
-          action.payload.departure.subtract(3, "hours");
-        requestedFlight.keyMoments.planned.countersClosing =
-          action.payload.departure.subtract(1, "hours");
-        requestedFlight.keyMoments.planned.bording =
-          action.payload.departure.subtract(0.45, "hours");
-        requestedFlight.keyMoments.planned.departure = action.payload.departure;
-
-        requestedFlight.origin.shortName = action.payload.origin;
-        requestedFlight.destenation.shortName = action.payload.destenation;
+        requestedFlight.origin.code = action.payload.origin;
+        requestedFlight.destenation.code = action.payload.destenation;
       }
     },
     createNewFlightFromTLVFlight: (
@@ -172,7 +163,7 @@ export const {
 // Other code such as selectors can use the imported `RootState` type
 
 export const allTLVFlights = (state: RootState) => {
-  return state.flights.tlvAvalableFlights;
+  return state.flights.tlvFlights;
 };
 export const allFlights = (state: RootState) => state.flights.flights;
 export const oneFlight = (state: RootState, flightId: string) => {

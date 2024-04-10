@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/command";
 import { oneFlight } from "@/redux/slices/flightsSlice";
 import { useParams } from "react-router-dom";
-import { agentType } from "@/types";
+import { editAgentsHook } from "@/hooks/editAgentsHook";
 
 const EditFlightAgents = () => {
   const { flightID } = useParams();
@@ -37,12 +37,14 @@ const EditFlightAgents = () => {
   if (flight) {
     const allAgents = useAppSelector(allAgentsSelector);
 
-    const [isAgentSelectOpen, setIsAgentSelectOpen] = useState(false);
+    const {
+      modifyFlightAgents,
+      setSelectedAgent,
+      selectedAgent,
+      flightAgents,
+    } = editAgentsHook(flight.crew);
 
-    const [selectedAgent, setSelectedAgent] = useState<{
-      agent: agentType;
-      notes?: string;
-    }>(flight.crew.SPV);
+    const [isAgentSelectOpen, setIsAgentSelectOpen] = useState(false);
 
     let imgSrc;
     if (selectedAgent.agent.role === "Ramp Agent") {
@@ -52,7 +54,6 @@ const EditFlightAgents = () => {
     } else {
       imgSrc = "/user-blue.svg";
     }
-
     return (
       <Drawer>
         <DrawerTrigger className="text-md w-full font-semibold text-white flex justify-center items-center py-2.5 mt-4  gap-2   rounded-xl bg-blue">
@@ -104,6 +105,11 @@ const EditFlightAgents = () => {
                         <CommandGroup className="max-h-[150px] overflow-y-scroll ">
                           {allAgents.map((agent) => (
                             <CommandItem
+                              onSelect={() =>
+                                modifyFlightAgents.handleAgentChange(
+                                  agent.agentId
+                                )
+                              }
                               className={cn(
                                 " text-md font-semibold p-2  rounded-lg  ",
                                 selectedAgent.agent.name === agent.name &&
@@ -136,6 +142,9 @@ const EditFlightAgents = () => {
                 <textarea
                   className="w-full p-2 border-2 border-lightGray outline-none rounded-lg h-[60px] "
                   value={selectedAgent.notes || ""}
+                  onChange={(e) =>
+                    modifyFlightAgents.handleAgentNotesChange(e.target.value)
+                  }
                 ></textarea>
               </div>
             </div>
@@ -146,27 +155,33 @@ const EditFlightAgents = () => {
             )}
           >
             <Agent
-              agent={flight.crew.SPV}
+              agent={flightAgents.SPV}
+              roleInFlight="SPV"
               selectedAgent={selectedAgent}
-              onClick={() => setSelectedAgent(flight.crew.SPV)}
+              onClick={() => setSelectedAgent(flightAgents.SPV)}
             />
 
             <Agent
-              agent={flight.crew.rampAgent}
+              agent={flightAgents.rampAgent}
+              roleInFlight="rampAgent"
               selectedAgent={selectedAgent}
-              onClick={() => setSelectedAgent(flight.crew.rampAgent)}
+              onClick={() => setSelectedAgent(flightAgents.rampAgent)}
             />
-            {flight.crew.agents.map((agent) => {
+            {flightAgents.agents.map((agent) => {
               return (
                 <Agent
                   key={agent.agent.agentId}
+                  roleInFlight="Agent"
                   agent={agent}
                   selectedAgent={selectedAgent}
                   onClick={() => setSelectedAgent(agent)}
                 />
               );
             })}
-            <div className="bg-blue w-full py-2.5 rounded-xl flex items-center justify-center font-semibold text-sm text-white gap-2">
+            <div
+              className="bg-blue w-full py-2.5 rounded-xl flex items-center justify-center font-semibold text-sm text-white gap-2"
+              onClick={() => modifyFlightAgents.handleAddAgent()}
+            >
               new Agent
               <Plus />
             </div>

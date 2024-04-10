@@ -38,7 +38,9 @@ const EditFlightReportKeyMoments = ({
             className=" absolute invisible "
             id={type}
             name={type}
-            value={flight.keyMoments.actual[type].format("YYYY-MM-DDTHH:MM")}
+            value={dayjs(flight.keyMoments.actual[type]).format(
+              "YYYY-MM-DDTHH:MM"
+            )}
             onChange={(event) =>
               dispatch(
                 updateFlightKeyMomentsActual({
@@ -52,7 +54,9 @@ const EditFlightReportKeyMoments = ({
           <div className=" w-full h-7 bg-lightGray rounded-lg flex justify-center gap-2.5 items-center    text-md font-bold text-blue">
             {" "}
             <img src={imgSrc} alt="" className="w-3" />
-            <div>{flight.keyMoments.actual[type].format("DD MMM HH:mm")}</div>
+            <div>
+              {dayjs(flight.keyMoments.actual[type]).format("DD MMM HH:mm")}
+            </div>
           </div>
           <label
             htmlFor={type}

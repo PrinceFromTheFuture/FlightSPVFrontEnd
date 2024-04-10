@@ -2,80 +2,54 @@ import { agentType, flightCrewType } from "@/types";
 import { useState } from "react";
 import { useAppSelector } from "./hooks";
 import { allAgentsSelector } from "@/redux/slices/agentsSlice";
-import { nanoid } from "@reduxjs/toolkit";
 
 export const editAgentsHook = (intialFlightCrew: flightCrewType) => {
   const [flightAgents, setFlightAgents] =
     useState<flightCrewType>(intialFlightCrew);
-  const [selectedAgent, setSelectedAgent] = useState<agentType>(
-    intialFlightCrew.SPV
-  );
+  const [selectedAgent, setSelectedAgent] = useState<{
+    agent: agentType;
+    notes?: string;
+  }>(intialFlightCrew.SPV);
 
-  const allAgent = useAppSelector(allAgentsSelector);
-
-  const handleAgentPropChange = (prop: "name" | "notes", value: string) => {
-    switch (selectedAgent?.role) {
-      case "SPV":
-        {
-          const oldAgents = flightAgents.agents.map((agent) => {
-            return agent;
-          });
-          const newFlightAgents: typeof flightAgents = {
-            agents: oldAgents,
-            rampAgent: flightAgents.rampAgent,
-            SPV: { ...flightAgents.SPV, [prop]: value },
-          };
-          setFlightAgents(newFlightAgents);
-          setSelectedAgent({ ...selectedAgent, [prop]: value });
-        }
-        break;
-      case "Ramp Agent":
-        {
-          const oldAgents = flightAgents.agents.map((agent) => {
-            return agent;
-          });
-          const newFlightAgents: typeof flightAgents = {
-            agents: oldAgents,
-            SPV: flightAgents.SPV,
-            rampAgent: { ...flightAgents.rampAgent, [prop]: value },
-          };
-          setFlightAgents(newFlightAgents);
-          setSelectedAgent({ ...selectedAgent, [prop]: value });
-        }
-        break;
-      default: {
-        const oldAgents = flightAgents.agents.map((agent) => {
-          if (agent[prop] === selectedAgent?.[prop]) {
-            return { ...agent, [prop]: value };
-          }
-          return agent;
-        });
-        const newFlightAgents: typeof flightAgents = {
-          agents: oldAgents,
-          SPV: flightAgents.SPV,
-          rampAgent: flightAgents.rampAgent,
-        };
-        setFlightAgents(newFlightAgents);
-
-        setSelectedAgent({ ...selectedAgent, [prop]: value });
-
-        console.log(
-          "all",
-          newFlightAgents,
-          "selected",
-          selectedAgent,
-          "newSelected"
-        );
-      }
-    }
-  };
+  const allAgents = useAppSelector(allAgentsSelector);
 
   const handleAgentNotesChange = (newNote: string) => {
-    handleAgentPropChange("notes", newNote);
+    console.log(newNote);
   };
 
-  const handleAgentNameChange = (newName: string) => {
-    handleAgentPropChange("name", newName);
+  const handleAgentChange = (agentId: string) => {
+    const requestedNewAgent = allAgents.find(
+      (agent) => agent.agentId === agentId
+    );
+
+    if (flightAgents.SPV.agent === selectedAgent.agent) {
+      const newFlightCrew: flightCrewType = JSON.parse(
+        JSON.stringify(flightAgents)
+      );
+      newFlightCrew.SPV = { agent: requestedNewAgent! };
+      setFlightAgents(newFlightCrew);
+      setSelectedAgent({ agent: requestedNewAgent! });
+    } else if (flightAgents.rampAgent.agent === selectedAgent.agent) {
+      const newFlightCrew: flightCrewType = JSON.parse(
+        JSON.stringify(flightAgents)
+      );
+      newFlightCrew.rampAgent = { agent: requestedNewAgent! };
+      setFlightAgents(newFlightCrew);
+      setSelectedAgent({ agent: requestedNewAgent! });
+    } else {
+      const newFlightCrew: flightCrewType = JSON.parse(
+        JSON.stringify(flightAgents)
+      );
+      console.log(newFlightCrew);
+      newFlightCrew.agents = newFlightCrew.agents.filter(
+        (agent) => agent.agent === selectedAgent.agent
+      );
+      newFlightCrew.agents.push({ agent: requestedNewAgent! });
+      console.log(newFlightCrew);
+
+      setFlightAgents(newFlightCrew);
+      setSelectedAgent({ agent: requestedNewAgent! });
+    }
   };
 
   const handleDeleteAgent = () => {
@@ -95,28 +69,22 @@ export const editAgentsHook = (intialFlightCrew: flightCrewType) => {
   };
 
   const handleAddAgent = () => {
-    const newAgents = flightAgents.agents.slice();
+    const newFlightAgents: flightCrewType = JSON.parse(
+      JSON.stringify(flightAgents)
+    );
 
-    newAgents.push({
-      agentId: nanoid(),
-      name: allAgent[0].name,
-      role: "Agent",
-      notes: "",
-    });
+    const newAgent: agentType = allAgents[0];
+    newFlightAgents.agents.push({ agent: newAgent });
 
-    setFlightAgents({
-      SPV: flightAgents.SPV,
-      rampAgent: flightAgents.rampAgent,
-      agents: newAgents,
-    });
-    setSelectedAgent(newAgents[newAgents.length - 1]);
+    setSelectedAgent({ agent: newAgent });
+    setFlightAgents(newFlightAgents);
   };
 
   const modifyFlightAgents = {
     handleAddAgent,
     handleDeleteAgent,
     handleAgentNotesChange,
-    handleAgentNameChange,
+    handleAgentChange,
   };
   return {
     modifyFlightAgents,

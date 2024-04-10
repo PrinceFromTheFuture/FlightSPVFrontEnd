@@ -20,7 +20,7 @@ const EditFlightReportPAGIAAgent = () => {
   const flight = useAppSelector((state) => oneFlight(state, flightID));
 
   if (flight) {
-    const [value, setValue] = useState(flight.PAGIAAgent.name);
+    const [value, setValue] = useState(flight.PAGIAAgent);
     return (
       <Dialog>
         <DialogTrigger className=" w-full ">
@@ -30,7 +30,7 @@ const EditFlightReportPAGIAAgent = () => {
           <div className="bg-lightGray rounded-lg w-full flex justify-between items-center p-2.5 ">
             <img src="/user-blue.svg" className="w-4" />
             <div className="   text-md font-bold text-blue">
-              {flight.PAGIAAgent.name}
+              {flight.PAGIAAgent}
             </div>
             <img src="/triangle.svg" alt="" className="w-2.5" />
           </div>

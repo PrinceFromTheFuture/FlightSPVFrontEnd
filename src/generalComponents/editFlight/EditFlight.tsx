@@ -10,8 +10,8 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import { oneFlight, updateFlightMetaData } from "@/redux/slices/flightsSlice";
+import { useAppSelector } from "@/hooks/hooks";
+import { oneFlight } from "@/redux/slices/flightsSlice";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -30,18 +30,9 @@ const EditFlight = () => {
       gate: flight.gate,
       counters: flight.counters,
       departure: flight.keyMoments.planned.departure,
-      origin: flight.origin.shortName,
-      destenation: flight.destenation.shortName,
+      origin: flight.origin.code,
+      destenation: flight.destenation.code,
     });
-    const dispatch = useAppDispatch();
-    const handleSaveFlight = () => {
-      dispatch(
-        updateFlightMetaData({
-          flightId: flightID,
-          ...flightMetaData,
-        })
-      );
-    };
 
     return (
       <Drawer>
@@ -108,12 +99,6 @@ const EditFlight = () => {
                 <input
                   type="text"
                   value={flightMetaData.origin}
-                  onChange={(event) =>
-                    setFlightMetaData({
-                      ...flightMetaData,
-                      origin: event.target.value,
-                    })
-                  }
                   className="text-lg font-semibold  outline-none border-2 border-blue text-center text-blue rounded-lg p-2"
                 />
                 <DialogClose className=" items-end ">
@@ -143,12 +128,6 @@ const EditFlight = () => {
                 <input
                   type="text"
                   value={flightMetaData.destenation}
-                  onChange={(event) =>
-                    setFlightMetaData({
-                      ...flightMetaData,
-                      destenation: event.target.value,
-                    })
-                  }
                   className="text-lg font-semibold  outline-none border-2 border-blue text-center text-blue rounded-lg p-2"
                 />
                 <DialogClose className=" items-end ">
@@ -225,13 +204,9 @@ const EditFlight = () => {
             <div className="w-full">
               <input
                 type="datetime-local"
-                value={flightMetaData.departure.format("YYYY-MM-DDTHH:MM")}
-                onChange={(event) =>
-                  setFlightMetaData({
-                    ...flightMetaData,
-                    departure: dayjs(event.target.value),
-                  })
-                }
+                value={dayjs(flightMetaData.departure).format(
+                  "YYYY-MM-DDTHH:MM"
+                )}
                 id="departure"
                 className=" absolute invisible"
               />
@@ -245,17 +220,14 @@ const EditFlight = () => {
                     Departure Date
                   </div>
                   <div className="   text-md font-bold text-blue text-left">
-                    {flightMetaData.departure.format("DD MMM HH:mm")}
+                    {dayjs(flightMetaData.departure).format("DD MMM HH:mm")}
                   </div>
                 </div>
               </label>
             </div>
           </div>
 
-          <DrawerClose
-            className="bg-blue w-full py-3 text-white font-semibold font-sm rounded-xl"
-            onClick={handleSaveFlight}
-          >
+          <DrawerClose className="bg-blue w-full py-3 text-white font-semibold font-sm rounded-xl">
             Save Changes
           </DrawerClose>
         </DrawerContent>

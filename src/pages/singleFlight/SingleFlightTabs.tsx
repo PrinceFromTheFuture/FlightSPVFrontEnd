@@ -27,10 +27,10 @@ const SingleFlightTabs = () => {
         <TabsContent value="FlightCrew">
           <div className=" flex flex-col gap-3">
             {" "}
-            <Agent agent={flight.crew.SPV} />
-            <Agent agent={flight.crew.rampAgent} />
+            <Agent agent={flight.crew.SPV} roleInFlight="SPV" />
+            <Agent agent={flight.crew.rampAgent} roleInFlight="rampAgent" />
             {flight.crew.agents.map((agent) => {
-              return <Agent agent={agent} />;
+              return <Agent agent={agent} roleInFlight="Agent" />;
             })}
           </div>
           <EditFlightAgents />

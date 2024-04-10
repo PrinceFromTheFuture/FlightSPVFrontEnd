@@ -12,11 +12,12 @@ interface AgentProps {
   agent: { agent: agentType; notes?: string };
   selectedAgent?: { agent: agentType; notes?: string };
   onClick?: React.MouseEventHandler<HTMLDivElement>;
+  roleInFlight: string;
 }
 
-const Agent = ({ agent, selectedAgent, onClick }: AgentProps) => {
+const Agent = ({ agent, selectedAgent, onClick, roleInFlight }: AgentProps) => {
   let imgSrc;
-  if (agent.agent.role === "Ramp Agent") {
+  if (roleInFlight === "Ramp Agent") {
     imgSrc = "/ramp.svg";
   } else if (agent.agent.role === "SPV") {
     imgSrc = "/spv.svg";
@@ -41,9 +42,7 @@ const Agent = ({ agent, selectedAgent, onClick }: AgentProps) => {
           <img src={imgSrc} alt="fdsf" />
         </div>
         <div className="ml-4 flex flex-col ">
-          <div className="text-gray text-sm font-semibold ">
-            {agent.agent.role}
-          </div>
+          <div className="text-gray text-sm font-semibold ">{roleInFlight}</div>
           <div className="   text-lg font-bold text-blue">
             {agent.agent.name}
           </div>
