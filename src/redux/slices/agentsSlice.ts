@@ -6,7 +6,9 @@ import axios from "axios";
 export const getAllAgents = createAsyncThunk(
   "agents/getAllAgents",
   async () => {
-    const response = await axios.get("http://localhost:3000/agents/getAll");
+    const response = await axios.get(
+      `${import.meta.env.VITE_SERVER_BASE_ROUTE}/agents/getAll`
+    );
     return response.data;
   }
 );

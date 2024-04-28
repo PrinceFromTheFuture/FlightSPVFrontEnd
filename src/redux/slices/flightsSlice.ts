@@ -30,7 +30,7 @@ export const getAllTLVFlights = createAsyncThunk(
         to: dayjs().add(7, "days").format("YYYY-MM-DD"),
       }
     );
-    console.log(response);
+    console.log(response.data);
     return response.data;
   }
 );

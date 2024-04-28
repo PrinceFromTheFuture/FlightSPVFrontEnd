@@ -6,7 +6,7 @@ import TLVflightComponent from "./TLVflightComponent.tsx";
 
 const AssignNewFlight = () => {
   const tlvFlights = useAppSelector((state) => state.flights.tlvFlights);
-  let test: any = [];
+  let allTLVFlights: any = [];
 
   for (let i = 0; i < tlvFlights.length; i++) {
     if (
@@ -16,9 +16,9 @@ const AssignNewFlight = () => {
         "day"
       ) === true
     ) {
-      test.push(<TLVflightComponent TLVFlight={tlvFlights[i]} />);
+      allTLVFlights.push(<TLVflightComponent TLVFlight={tlvFlights[i]} />);
     } else {
-      test.push(
+      allTLVFlights.push(
         <div className=" text-gray text-2xl font-semibold mt-4">
           {dayjs(tlvFlights[i].dateString).format("ddd, DD.MM")}{" "}
         </div>
@@ -36,7 +36,7 @@ const AssignNewFlight = () => {
         </Link>
       </div>
       <div className="flex justify-start items-start flex-col gap-3">
-        {test}
+        {allTLVFlights}
       </div>
     </div>
   );

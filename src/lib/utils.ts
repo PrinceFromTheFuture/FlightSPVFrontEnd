@@ -32,6 +32,7 @@ const cityCodes = [
   { city: "SOCHI VIA S.PETERSBURG", code: "ATH" },
   { city: "BELGRADE", code: "BEG" },
   { city: "SOCHI VIA S.PETERSBURG", code: "ATH" },
+  { city: "SAMARKAND via TASHKENT", code: "TAS" },
 ];
 
 export const getAirPortByCityName = (city: string) => {

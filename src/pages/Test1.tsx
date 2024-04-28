@@ -21,7 +21,6 @@ const Test1 = () => {
 
   return (
     <div className="multi-stage-form transition-all w-full bg-lightGray h-[50vh] overflow-hidden">
-      {" "}
       <div
         className=" w-fit bg-gray h-8 overflow-visible flex justify-between transition-all  duration-1000"
         style={{ transform: `translateX(-${(100 / totalStages) * stage}%)` }}
