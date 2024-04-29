@@ -59,10 +59,11 @@ const EditFlightReport = () => {
         <div
           onClick={() => {
             axios
-              .get(
+              .post(
                 `${
                   import.meta.env.VITE_SERVER_BASE_ROUTE
                 }/flights/generateFlightReport`,
+                { flightId: flight.flightId },
                 {
                   responseType: "arraybuffer", // Ensure response type is set to arraybuffer
                 }
