@@ -4,6 +4,7 @@ import EditFlightReportPAGIAAgent from "./EditFlightReportPAGIAAgent";
 import { useAppSelector } from "@/hooks/hooks";
 import { useParams } from "react-router-dom";
 import { oneFlight } from "@/redux/slices/flightsSlice";
+import axios from "axios";
 
 const EditFlightReport = () => {
   const { flightID } = useParams();
@@ -54,6 +55,35 @@ const EditFlightReport = () => {
             label="Departure"
           />
           <EditFlightReportPAGIAAgent />
+        </div>
+        <div
+          onClick={() => {
+            axios
+              .get(
+                `${
+                  import.meta.env.VITE_SERVER_BASE_ROUTE
+                }/flights/generateFlightReport`,
+                {
+                  responseType: "arraybuffer", // Ensure response type is set to arraybuffer
+                }
+              )
+              .then((response) => {
+                // Create a Blob from the PDF content
+                const pdfBlob = new Blob([response.data], {
+                  type: "application/pdf",
+                });
+                // Generate a URL for the Blob
+                const pdfUrl = URL.createObjectURL(pdfBlob);
+                // Open a new window or tab with the PDF URL
+                window.open(pdfUrl, "_blank");
+              })
+              .catch((error) => {
+                console.error("Error fetching PDF:", error);
+              });
+          }}
+          className=" mt-6 w-full rounded-xl bg-blue p-3 text-lg font-semibold text-white text-center cursor-pointer"
+        >
+          generate flight report
         </div>
       </div>
     );
