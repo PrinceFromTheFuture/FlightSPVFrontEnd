@@ -16,7 +16,6 @@ export const getAllFlights = createAsyncThunk(
     const response = await axios.get(
       `${import.meta.env.VITE_SERVER_BASE_ROUTE}/flights/allFlights`
     );
-    console.log(response.data);
     return response.data;
   }
 );
@@ -30,7 +29,6 @@ export const getAllTLVFlights = createAsyncThunk(
         to: dayjs().add(7, "days").format("YYYY-MM-DD"),
       }
     );
-    console.log(response.data);
     return response.data;
   }
 );
@@ -81,13 +79,19 @@ export const flightsSlice = createSlice({
       action: PayloadAction<{
         flightId: string;
         type: flightReportKeyMoments;
-        value: Dayjs;
+        value: string;
       }>
     ) => {
       const requestedFlight = state.flights.find((flight) => {
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
+        axios.patch(
+          `${import.meta.env.VITE_SERVER_BASE_ROUTE}/flights/actualKeyMoments`,
+          { ...action.payload }
+        );
+        requestedFlight.keyMoments.actual[action.payload.type] =
+          action.payload.value;
       }
     },
     updateFlightPagiaAgent: (

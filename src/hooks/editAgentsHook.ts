@@ -40,12 +40,10 @@ export const editAgentsHook = (intialFlightCrew: flightCrewType) => {
       const newFlightCrew: flightCrewType = JSON.parse(
         JSON.stringify(flightAgents)
       );
-      console.log(newFlightCrew);
       newFlightCrew.agents = newFlightCrew.agents.filter(
         (agent) => agent.agent === selectedAgent.agent
       );
       newFlightCrew.agents.push({ agent: requestedNewAgent! });
-      console.log(newFlightCrew);
 
       setFlightAgents(newFlightCrew);
       setSelectedAgent({ agent: requestedNewAgent! });

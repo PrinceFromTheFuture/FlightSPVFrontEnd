@@ -1,6 +1,6 @@
 import FlightTimeLine from "@/generalComponents/fightTimeLine/FlightTimeLine";
-import { useAppSelector } from "@/hooks/hooks";
-import { oneFlight } from "@/redux/slices/flightsSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { getAllFlights, oneFlight } from "@/redux/slices/flightsSlice";
 import ThreeFlightDetails from "./ThreeFlightDetails";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -13,8 +13,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useEffect } from "react";
+import axios from "axios";
 
 const SingleFlight = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { flightID } = useParams();
   if (flightID == undefined || "") {
@@ -37,6 +39,14 @@ const SingleFlight = () => {
     useEffect(() => {
       window.scroll(0, 0);
     }, []);
+    const handleDeleteFlight = async () => {
+      await axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_ROUTE}/flights/delete`,
+        { flightId: flight.flightId }
+      );
+      dispatch(getAllFlights());
+      navigate("/");
+    };
     return (
       <div className=" flex justify-center items-center  flex-col relative ">
         <div className=" flex justify-between items-center w-contentMaxWidth">
@@ -77,7 +87,10 @@ const SingleFlight = () => {
                 <div className="w-full  p-3">
                   <EditFlight />
                 </div>
-                <div className="flex justify-start items-center gap-2.5 font-medium p-3 pt-[0px]">
+                <div
+                  onClick={handleDeleteFlight}
+                  className="flex justify-start items-center gap-2.5 font-medium p-3 pt-[0px] cursor-pointer"
+                >
                   <img src="/trash-can-xmark-blue.svg" alt="" className="w-3" />
                   <div> Delete</div>
                 </div>

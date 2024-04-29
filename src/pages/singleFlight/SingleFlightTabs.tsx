@@ -10,7 +10,6 @@ import { oneFlight } from "@/redux/slices/flightsSlice";
 
 const SingleFlightTabs = () => {
   const { flightID } = useParams();
-  console.log(flightID);
   if (flightID == undefined || "") {
     return <div>A problem occured</div>;
   }

@@ -28,7 +28,6 @@ import { editAgentsHook } from "@/hooks/editAgentsHook";
 
 const EditFlightAgents = () => {
   const { flightID } = useParams();
-  console.log(flightID);
   if (flightID == undefined || "") {
     return <div>A problem occured</div>;
   }

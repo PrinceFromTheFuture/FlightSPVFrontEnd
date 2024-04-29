@@ -21,7 +21,6 @@ const EditFlightReportKeyMoments = ({
   const dispatch = useAppDispatch();
 
   const { flightID } = useParams();
-  console.log(flightID);
   if (flightID == undefined || "") {
     return <div>A problem occured</div>;
   }
@@ -35,7 +34,7 @@ const EditFlightReportKeyMoments = ({
         <div className=" w-full flex justify-between items-center relative gap-2 ">
           <input
             type="datetime-local"
-            className=" absolute invisible "
+            className="  "
             id={type}
             name={type}
             value={dayjs(flight.keyMoments.actual[type]).format(
@@ -44,7 +43,7 @@ const EditFlightReportKeyMoments = ({
             onChange={(event) =>
               dispatch(
                 updateFlightKeyMomentsActual({
-                  value: dayjs(event.target.value),
+                  value: event.target.value,
                   type,
                   flightId: flight.flightId,
                 })

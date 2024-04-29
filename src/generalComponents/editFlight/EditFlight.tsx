@@ -18,7 +18,6 @@ import { useParams } from "react-router-dom";
 
 const EditFlight = () => {
   const { flightID } = useParams();
-  console.log(flightID);
   if (flightID == undefined || "") {
     return <div>A problem occured</div>;
   }

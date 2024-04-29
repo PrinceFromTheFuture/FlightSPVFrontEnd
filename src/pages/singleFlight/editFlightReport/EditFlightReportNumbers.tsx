@@ -14,7 +14,6 @@ interface EditFlightReportNumbersProps {
 
 const EditFlightReportNumbers = ({ type }: EditFlightReportNumbersProps) => {
   const { flightID } = useParams();
-  console.log(flightID);
   if (flightID == undefined || "") {
     return <div>A problem occured</div>;
   }

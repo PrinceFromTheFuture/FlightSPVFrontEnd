@@ -8,7 +8,6 @@ import axios from "axios";
 
 const EditFlightReport = () => {
   const { flightID } = useParams();
-  console.log(flightID);
   if (flightID == undefined || "") {
     return <div>A problem occured</div>;
   }
