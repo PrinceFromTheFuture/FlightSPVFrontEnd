@@ -64,9 +64,9 @@ export interface flightInterface {
   flightId: string;
   flightTime: string;
   PAGIAAgent: string;
-  totalPassangers: 323;
-  totalStrollers: 323;
-  totalSuitcases: 323;
+  totalPassangers: number;
+  totalStrollers: number;
+  totalSuitcases: number;
   localApplicationId: number;
   __v?: 0;
 }

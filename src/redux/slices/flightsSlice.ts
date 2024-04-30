@@ -72,6 +72,13 @@ export const flightsSlice = createSlice({
         return flight.flightId === action.payload.flightId;
       });
       if (requestedFlight) {
+        axios.patch(
+          `${
+            import.meta.env.VITE_SERVER_BASE_ROUTE
+          }/flights/flightReportNumbers`,
+          { ...action.payload }
+        );
+        requestedFlight[action.payload.type] = action.payload.value;
       }
     },
     updateFlightKeyMomentsActual: (

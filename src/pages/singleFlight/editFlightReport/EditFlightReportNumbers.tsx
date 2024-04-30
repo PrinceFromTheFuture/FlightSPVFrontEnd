@@ -4,8 +4,12 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useAppSelector } from "@/hooks/hooks";
-import { oneFlight } from "@/redux/slices/flightsSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import {
+  oneFlight,
+  updateFlightKeyMomentsActual,
+  updateFlightNumbers,
+} from "@/redux/slices/flightsSlice";
 import { useParams } from "react-router-dom";
 
 interface EditFlightReportNumbersProps {
@@ -17,6 +21,8 @@ const EditFlightReportNumbers = ({ type }: EditFlightReportNumbersProps) => {
   if (flightID == undefined || "") {
     return <div>A problem occured</div>;
   }
+
+  const dispatch = useAppDispatch();
 
   const flight = useAppSelector((state) => oneFlight(state, flightID));
 
@@ -49,7 +55,16 @@ const EditFlightReportNumbers = ({ type }: EditFlightReportNumbersProps) => {
             type="number"
             max={200}
             min={0}
-            value={flight.totalPassangers}
+            onChange={(e) => {
+              dispatch(
+                updateFlightNumbers({
+                  flightId: flight.flightId,
+                  type,
+                  value: Number(e.target.value),
+                })
+              );
+            }}
+            value={flight[type]}
             className="text-lg font-semibold  outline-none border-2 border-blue text-center text-blue rounded-lg p-2"
           />
           <DialogClose className=" items-end ">
