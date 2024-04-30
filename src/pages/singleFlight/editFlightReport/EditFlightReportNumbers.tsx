@@ -5,11 +5,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import {
-  oneFlight,
-  updateFlightKeyMomentsActual,
-  updateFlightNumbers,
-} from "@/redux/slices/flightsSlice";
+import { oneFlight, updateFlightNumbers } from "@/redux/slices/flightsSlice";
 import { useParams } from "react-router-dom";
 
 interface EditFlightReportNumbersProps {
