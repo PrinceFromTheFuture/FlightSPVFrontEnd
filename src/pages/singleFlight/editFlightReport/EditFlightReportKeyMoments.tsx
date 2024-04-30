@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import formatDayjsToHTMLInputValue from "@/lib/formatDayjsToHTMLInputValue";
 import {
   oneFlight,
   updateFlightKeyMomentsActual,
@@ -34,11 +35,11 @@ const EditFlightReportKeyMoments = ({
         <div className=" w-full flex justify-between items-center relative gap-2 ">
           <input
             type="datetime-local"
-            className="  "
+            className="  absolute invisible "
             id={type}
             name={type}
-            value={dayjs(flight.keyMoments.actual[type]).format(
-              "YYYY-MM-DDTHH:MM"
+            value={formatDayjsToHTMLInputValue(
+              dayjs(flight.keyMoments.actual[type])
             )}
             onChange={(event) =>
               dispatch(

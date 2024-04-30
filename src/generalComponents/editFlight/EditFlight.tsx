@@ -11,6 +11,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useAppSelector } from "@/hooks/hooks";
+import formatDayjsToHTMLInputValue from "@/lib/formatDayjsToHTMLInputValue";
 import { oneFlight } from "@/redux/slices/flightsSlice";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -203,8 +204,8 @@ const EditFlight = () => {
             <div className="w-full">
               <input
                 type="datetime-local"
-                value={dayjs(flightMetaData.departure).format(
-                  "YYYY-MM-DDTHH:MM"
+                value={formatDayjsToHTMLInputValue(
+                  dayjs(flightMetaData.departure)
                 )}
                 id="departure"
                 className=" absolute invisible"
