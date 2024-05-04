@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { useAppDispatch } from "@/hooks/hooks";
-import { getAirPortByCityName } from "@/lib/utils";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import getAirPortByCityName from "@/lib/getAirPortByCityName";
+import { getAllAirPortsSelector } from "@/redux/slices/airportsSlice";
 import { createNewFlightFromTLVFlight } from "@/redux/slices/flightsSlice";
 import { flightInterface, tlvFlightInterface } from "@/types";
 import axios from "axios";
@@ -14,6 +15,8 @@ const TLVflightComponent = ({ TLVFlight }: TLVflightComponentProps) => {
   const dsipatch = useAppDispatch();
 
   const navigate = useNavigate();
+
+  const allAirports = useAppSelector(getAllAirPortsSelector);
 
   const handleTLVFlightClicked = async () => {
     const response = await axios.post<flightInterface>(
@@ -44,7 +47,8 @@ const TLVflightComponent = ({ TLVFlight }: TLVflightComponentProps) => {
           </div>
         </div>
         <div className="text-blue font-bold text-xl">
-          {getAirPortByCityName(TLVFlight.city)}
+          {allAirports.find((airport) => airport.name === TLVFlight.city)
+            ?.code || "???"}
         </div>
       </DialogTrigger>
       <DialogContent>
@@ -61,7 +65,8 @@ const TLVflightComponent = ({ TLVFlight }: TLVflightComponentProps) => {
             </div>
             <div>
               <div className=" text-2xl font-bold text-blue">
-                {getAirPortByCityName(TLVFlight.city)}
+                {allAirports.find((airport) => airport.name === TLVFlight.city)
+                  ?.code || "???"}
               </div>
               <div className=" text-gray text-sm font-semibold ">
                 {TLVFlight.city}

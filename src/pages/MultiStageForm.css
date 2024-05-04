@@ -1,9 +1,0 @@
-/* MultiStageForm.css */
-.form-stage {
-    transition: transform 0.3s ease-in-out; /* Adjust the transition properties as needed */
-  }
-  
-  .form-stage-1 { transform: translateX(0%); }
-  .form-stage-2 { transform: translateX(-100%); }
-  .form-stage-3 { transform: translateX(-200%); }
-  
