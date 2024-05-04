@@ -1,6 +1,5 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import getAirPortByCityName from "@/lib/getAirPortByCityName";
 import { getAllAirPortsSelector } from "@/redux/slices/airportsSlice";
 import { createNewFlightFromTLVFlight } from "@/redux/slices/flightsSlice";
 import { flightInterface, tlvFlightInterface } from "@/types";
