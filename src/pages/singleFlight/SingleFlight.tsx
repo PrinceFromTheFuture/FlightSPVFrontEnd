@@ -94,6 +94,13 @@ const SingleFlight = () => {
                   <img src="/trash-can-xmark-blue.svg" alt="" className="w-3" />
                   <div> Delete</div>
                 </div>
+                <Link
+                  to={`/singleFlight/${flightID}/chat`}
+                  className="flex justify-start items-center gap-2.5 font-medium p-3 pt-[0px] cursor-pointer"
+                >
+                  <img src="/trash-can-xmark-blue.svg" alt="" className="w-3" />
+                  <div> Flight Chat</div>
+                </Link>
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -105,7 +112,7 @@ const SingleFlight = () => {
         <div className=" w-full flex justify-center items-center flex-col">
           <img src="/origin-to-destenation.svg" alt="" className="w-[80%]" />
           <div className=" flex justify-between items-center w-full mb-5 mt-2.5">
-            <div className="">
+            <div className=" text-right">
               <div className=" text-2xl font-bold text-blue">
                 {flight.origin.code}
               </div>
@@ -114,7 +121,7 @@ const SingleFlight = () => {
               </div>
             </div>
             <div>
-              <div className=" text-2xl font-bold text-blue">
+              <div className=" text-2xl font-bold text-blue  text-right">
                 {flight.destenation.code}
               </div>
               <div className=" text-gray text-sm font-semibold ">

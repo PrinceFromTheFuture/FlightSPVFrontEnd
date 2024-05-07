@@ -10,6 +10,7 @@ import SingleFlight from "@/pages/singleFlight/SingleFlight.tsx";
 import Root from "./Root.tsx";
 import { SingleFlightLayout } from "./pages/singleFlight/SingleFlightLayout.tsx";
 import AssignNewFlight from "./pages/assignNewFlight/AssignNewFlight.tsx";
+import FlightChat from "./pages/singleFlight/flightChat/FlightChat.tsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      { path: "/singleFlight/:flightID/chat", element: <FlightChat /> },
       {
         path: "/singleFlight",
         element: <SingleFlightLayout />,

@@ -33,6 +33,14 @@ export interface tlvFlightInterface {
   localApplicationId: number;
 }
 
+export interface flightConversation {
+  messages: {
+    author: string;
+    messegeType: "image" | "text";
+    content: string;
+  }[];
+}
+
 export interface flightInterface {
   crew: flightCrewType;
   keyMoments: {
@@ -66,5 +74,6 @@ export interface flightInterface {
   totalStrollers: number;
   totalSuitcases: number;
   localApplicationId: number;
+  flightConversation: flightConversation;
   __v?: 0;
 }
