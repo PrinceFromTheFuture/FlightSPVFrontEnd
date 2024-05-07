@@ -3,6 +3,7 @@ import { oneFlight } from "@/redux/slices/flightsSlice";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import FlihtChatConversation from "./FlihtChatConversation";
 
 const FlightChat = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const FlightChat = () => {
 
   return (
     <div className=" flex justify-between items-center  flex-col  fixed  right-[0px] left-[0px] top-[0px] bottom-[0px] bg-lightGray">
-      <div className="  bg-blue pt-[6vw] w-full flex justify-center pb-[6vw] items-center ">
+      <div className="  bg-blue pt-[6vw] w-full flex justify-center pb-[6vw] items-center rounded-b-2xl ">
         <div className="w-contentMaxWidth flex justify-start items-center ">
           <Link
             to={`/singleFlight/${flightID}`}
@@ -38,12 +39,17 @@ const FlightChat = () => {
           </div>
         </div>
       </div>
+      <FlihtChatConversation />
       <div className=" bottom-[0px] w-contentMaxWidth mb-[6vw]  flex  justify-between gap-2 items-center ">
         <div className=" w-full bg-white rounded-md shadow-sm flex justify-between items-center p-3">
           <textarea
+            onChange={(e) =>
+              console.log(e.target.scrollHeight, e.target.clientHeight)
+            }
             name=""
             id=""
-            className="w-full outline-none border-none h-5"
+            placeholder="type here somthing..."
+            className="w-[90%] outline-none border-none h-5 "
           ></textarea>
           <div className="w-4 flex justify-center items-center h-full">
             <img src="/paper-plane-solid.svg" alt="" />
