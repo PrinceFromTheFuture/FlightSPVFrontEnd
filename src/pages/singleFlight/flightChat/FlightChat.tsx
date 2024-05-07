@@ -1,11 +1,10 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { useAppSelector } from "@/hooks/hooks";
 import { oneFlight } from "@/redux/slices/flightsSlice";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const FlightChat = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { flightID } = useParams();
   if (flightID == undefined || "") {
