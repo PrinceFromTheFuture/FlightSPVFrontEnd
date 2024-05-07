@@ -10,13 +10,12 @@ import SingleFlight from "@/pages/singleFlight/SingleFlight.tsx";
 import Root from "./Root.tsx";
 import { SingleFlightLayout } from "./pages/singleFlight/SingleFlightLayout.tsx";
 import AssignNewFlight from "./pages/assignNewFlight/AssignNewFlight.tsx";
-import RouterErorr from "./RouterErorr.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    errorElement: <RouterErorr />,
+
     children: [
       {
         path: "/",
