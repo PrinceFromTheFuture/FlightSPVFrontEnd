@@ -37,6 +37,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+        heebo: ["Heebo", "sans-serif"],
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

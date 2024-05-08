@@ -34,9 +34,10 @@ export interface tlvFlightInterface {
 }
 
 export interface flightConversation {
+  flight: string;
   messages: {
-    author: string;
-    messegeType: "image" | "text";
+    author: agentType;
+    messageType: "image" | "text";
     content: string;
   }[];
 }

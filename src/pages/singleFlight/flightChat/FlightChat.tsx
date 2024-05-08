@@ -1,9 +1,13 @@
 import { useAppSelector } from "@/hooks/hooks";
 import { oneFlight } from "@/redux/slices/flightsSlice";
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import FlihtChatConversation from "./FlihtChatConversation";
+import TextareaAutosize from "react-textarea-autosize";
+import ImageMessage from "./ImageMessage";
+import { flightConversation } from "@/types";
+import axios from "axios";
 
 const FlightChat = () => {
   const navigate = useNavigate();
@@ -19,6 +23,20 @@ const FlightChat = () => {
     }, []);
     return null;
   }
+
+  const [conversation, setConversation] = useState<
+    flightConversation | undefined
+  >(undefined);
+  useEffect(() => {
+    const getConverSation = async () => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_BASE_ROUTE}/conversations/${flightID}`
+      );
+      setConversation(response.data);
+      console.log(response.data);
+    };
+    getConverSation();
+  }, []);
 
   return (
     <div className=" flex justify-between items-center  flex-col  fixed  right-[0px] left-[0px] top-[0px] bottom-[0px] bg-lightGray">
@@ -39,26 +57,21 @@ const FlightChat = () => {
           </div>
         </div>
       </div>
-      <FlihtChatConversation />
+      {conversation && <FlihtChatConversation conversation={conversation} />}
       <div className=" bottom-[0px] w-contentMaxWidth mb-[6vw]  flex  justify-between gap-2 items-end ">
-        <div className=" w-full bg-white rounded-md shadow-sm flex justify-between items-center p-3">
-          <textarea
-            onChange={(e) =>
-              console.log(e.target.scrollHeight, e.target.clientHeight)
-            }
+        <div className=" w-full bg-white rounded-md shadow-sm flex justify-between items-center p-3 h-auto">
+          <TextareaAutosize
+            maxRows={5}
             name=""
             id=""
-            style={{ resize: "vertical" }}
             placeholder="type here somthing..."
-            className="w-[90%] outline-none border-none h-6 "
-          ></textarea>
+            className="w-[90%] outline-none border-none  resize-none "
+          ></TextareaAutosize>
           <div className="w-4 flex justify-center items-center h-full">
             <img src="/paper-plane-solid.svg" alt="" />
           </div>
         </div>
-        <div className="w-8  h-8 bg-blue rounded-md shadow-sm flex justify-center items-center ">
-          <img src="/camera-solid.svg" className="w-1/2" alt="" />
-        </div>
+        <ImageMessage />
       </div>
     </div>
   );
